@@ -1,0 +1,179 @@
+/* 1. Tambahkan Reset Global */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    color: #444;
+    scroll-behavior: smooth;
+    background-color: #fffcf5; /* Menyamakan warna dasar body */
+}
+
+#hero {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    color: #cfae2b;
+    /* 2. Tambahkan Flexbox agar konten ke tengah sempurna */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#hero::before {
+    content: "";
+    position: absolute;
+    top: 0; 
+    left: 0;
+    width: 100%; 
+    height: 100%;
+    background-image: url('background.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.4;
+    z-index: -1;
+}
+
+/* 3. Perbaikan Mode Responsif */
+@media (min-width: 1024px) { 
+    #hero::before { background-size: cover; } 
+}
+
+@media (max-width: 767px) { 
+    #hero {
+        /* Memastikan tidak ada padding bawaan di HP */
+        padding: 0 20px;
+    }
+    #hero::before { 
+        /* Ganti ke 'cover' jika ingin gambar memenuhi layar HP tanpa celah, 
+           atau tetap 'contain' tapi pastikan bg-color selaras */
+        background-size: cover; 
+    } 
+    #hero h1 {
+        font-size: 3rem; /* Ukuran nama disesuaikan untuk HP */
+    }
+}
+
+/* Tipografi & Tombol tetap sama */
+#hero h1 {
+    font-family: 'Great Vibes', cursive;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+.btn-gold {
+    background-color: #cfae2b;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 50px;
+    text-decoration: none; /* Menghilangkan garis bawah link */
+    display: inline-block;
+    transition: 0.3s;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    box-shadow: 0 4px 15px rgba(207, 174, 43, 0.3);
+}
+
+.countdown .time-box {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 15px 20px;
+  border-radius: 10px;
+  min-width: 80px;
+}
+
+.countdown .time {
+  font-size: 2rem;
+  font-weight: bold;
+  display: block;
+}
+
+.undangan {
+  background: linear-gradient(to bottom, #faf7f2, #ffffff);
+}
+
+.serif-title {
+  font-family: 'Great Vibes', cursive;
+  font-size: 3rem;
+}
+
+.divider {
+  width: 80px;
+  height: 3px;
+  background: #c9a44c;
+  margin: 0 auto;
+}
+
+.undangan-desc {
+  max-width: 700px;
+  margin: 0 auto;
+  color: #555;
+}
+
+.nama-mempelai {
+  font-family: 'Great Vibes', cursive;
+  font-size: 2.5rem;
+}
+
+.nama-mempelai span {
+  color: #c9a44c;
+}
+
+.acara-card {
+  border-radius: 20px;
+  border: none;
+  transition: transform 0.3s ease;
+}
+
+.acara-card:hover {
+  transform: translateY(-8px);
+}
+
+.icon-acara {
+  font-size: 2.5rem;
+}
+
+.btn-gold {
+  background: #c9a44c;
+  color: #fff;
+  border-radius: 30px;
+  padding: 10px 30px;
+}
+
+.btn-gold:hover {
+  background: #b38f3a;
+  color: #fff;
+}
+
+.penutup {
+  max-width: 700px;
+  margin: 0 auto;
+  color: #555;
+}
+
+.nama-penutup {
+  font-family: 'Great Vibes', cursive;
+  font-size: 2rem;
+}
+
+.ornament-top,
+.ornament-bottom {
+  position: absolute;
+  width: 100%;
+  height: 60px;
+  background: linear-gradient(to right, transparent, #c9a44c, transparent);
+  opacity: 0.15;
+}
+
+.ornament-top {
+  top: 0;
+}
+
+.ornament-bottom {
+  bottom: 0;
+}
+

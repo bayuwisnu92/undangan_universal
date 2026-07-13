@@ -1,0 +1,25 @@
+{
+  "name": "Undangan Pernikahan Lulu & Bayu",
+  "short_name": "Lulu & Bayu",
+  "description": "Undangan pernikahan Lulu Diyanti Putri & Bayu Wisnu Aji.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f8f1e8",
+  "theme_color": "#8f6842",
+  "icons": [
+    {
+      "src": "/asset/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/asset/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

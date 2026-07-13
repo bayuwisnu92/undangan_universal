@@ -1,179 +1,910 @@
-/* 1. Tambahkan Reset Global */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* =============================================
+   UNDANGAN NIKAH - LULU & BAYU
+   Islamic Luxury Theme
+   ============================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@300;400;500;600&family=Cinzel+Decorative:wght@400;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Sofia&display=swap');
+
+/* ---- VARIABLES ---- */
+:root {
+  --gold:       #C9A44C;
+  --gold-light: #E8C97E;
+  --gold-dark:  #A07830;
+  --navy:       #1A2744;
+  --navy-mid:   #2E4057;
+  --cream:      #FAF7F0;
+  --cream-dark: #F2EDE0;
+  --text:       #3A3020;
+  --text-light: #7A6A50;
+  --white:      #FFFFFF;
+  --font-arabic: 'Amiri', serif;
+  --font-serif:  'Cormorant Garamond', serif;
+  --font-script: 'Great Vibes', cursive;
+  --font-sans:   'Montserrat', sans-serif;
+  --font-display: 'Sofia', cursive;
+  --font-decorative: 'Cinzel Decorative', serif;
 }
+
+/* ---- RESET ---- */
+*, *::before, *::after {
+  margin: 0; padding: 0;
+  box-sizing: border-box;
+}
+
+html { scroll-behavior: smooth; }
 
 body {
-    font-family: 'Montserrat', sans-serif;
-    color: #444;
-    scroll-behavior: smooth;
-    background-color: #fffcf5; /* Menyamakan warna dasar body */
+  font-family: var(--font-sans);
+  background: var(--cream);
+  color: var(--text);
+  overflow-x: hidden;
 }
 
+/* ---- MUSIC PLAYER ---- */
+#music-player {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 9999;
+}
+
+#music-btn {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 2px solid var(--gold);
+  background: linear-gradient(135deg, var(--navy), var(--navy-mid));
+  color: var(--gold-light);
+  font-size: 1.3rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(201,164,76,0.45);
+  transition: transform 0.3s ease;
+  overflow: hidden;
+}
+
+#music-btn:hover { transform: scale(1.1); }
+
+#music-btn.playing #music-icon {
+  animation: spin 3s linear infinite;
+}
+
+.music-ripple {
+  position: absolute;
+  border-radius: 50%;
+  width: 100%; height: 100%;
+  background: rgba(201,164,76,0.25);
+  animation: ripple 2s ease-out infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes ripple {
+  0%   { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+/* ---- HERO ---- */
 #hero {
-    position: relative;
-    height: 100vh;
-    width: 100%;
-    overflow: hidden;
-    color: #cfae2b;
-    /* 2. Tambahkan Flexbox agar konten ke tengah sempurna */
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--navy);
 }
 
-#hero::before {
-    content: "";
-    position: absolute;
-    top: 0; 
-    left: 0;
-    width: 100%; 
-    height: 100%;
-    background-image: url('background.png');
-    background-position: center;
-    background-repeat: no-repeat;
-    opacity: 0.4;
-    z-index: -1;
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background-image: url('bg-wedding.png');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.18;
+  z-index: 0;
 }
 
-/* 3. Perbaikan Mode Responsif */
-@media (min-width: 1024px) { 
-    #hero::before { background-size: cover; } 
+/* Floating gold particles */
+.hero-particles {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+.maps-preview {
+  margin-top: 25px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,.15);
 }
 
-@media (max-width: 767px) { 
-    #hero {
-        /* Memastikan tidak ada padding bawaan di HP */
-        padding: 0 20px;
-    }
-    #hero::before { 
-        /* Ganti ke 'cover' jika ingin gambar memenuhi layar HP tanpa celah, 
-           atau tetap 'contain' tapi pastikan bg-color selaras */
-        background-size: cover; 
-    } 
-    #hero h1 {
-        font-size: 3rem; /* Ukuran nama disesuaikan untuk HP */
-    }
+.hero-particles span {
+  position: absolute;
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold-light);
+  opacity: 0;
+  animation: float-particle 8s ease-in-out infinite;
 }
 
-/* Tipografi & Tombol tetap sama */
-#hero h1 {
-    font-family: 'Great Vibes', cursive;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
-    margin-bottom: 20px;
+.hero-particles span:nth-child(1)  { left:10%; top:80%; animation-delay:0s;   animation-duration:9s; }
+.hero-particles span:nth-child(2)  { left:20%; top:60%; animation-delay:1.5s; animation-duration:7s; width:4px; height:4px; }
+.hero-particles span:nth-child(3)  { left:35%; top:90%; animation-delay:3s;   animation-duration:8s; width:8px; height:8px; }
+.hero-particles span:nth-child(4)  { left:55%; top:75%; animation-delay:0.5s; animation-duration:10s; }
+.hero-particles span:nth-child(5)  { left:70%; top:85%; animation-delay:2s;   animation-duration:6s; width:5px; height:5px; }
+.hero-particles span:nth-child(6)  { left:80%; top:65%; animation-delay:4s;   animation-duration:9s; }
+.hero-particles span:nth-child(7)  { left:90%; top:50%; animation-delay:1s;   animation-duration:7.5s; width:4px; height:4px; }
+.hero-particles span:nth-child(8)  { left:15%; top:40%; animation-delay:3.5s; animation-duration:8.5s; }
+.hero-particles span:nth-child(9)  { left:45%; top:30%; animation-delay:2.5s; animation-duration:9.5s; width:5px; height:5px; }
+.hero-particles span:nth-child(10) { left:60%; top:20%; animation-delay:0.8s; animation-duration:8s; width:7px; height:7px; }
+
+@keyframes float-particle {
+  0%   { opacity: 0; transform: translateY(0) scale(1); }
+  20%  { opacity: 0.8; }
+  80%  { opacity: 0.6; }
+  100% { opacity: 0; transform: translateY(-120px) scale(0.5); }
 }
 
-.btn-gold {
-    background-color: #cfae2b;
-    color: white;
-    border: none;
-    padding: 12px 30px;
-    border-radius: 50px;
-    text-decoration: none; /* Menghilangkan garis bawah link */
-    display: inline-block;
-    transition: 0.3s;
-    text-transform: uppercase;
-    font-size: 0.8rem;
-    box-shadow: 0 4px 15px rgba(207, 174, 43, 0.3);
+#hero-content {
+  position: relative;
+  z-index: 2;
+  padding: 40px 20px;
+  max-width: 700px;
+  width: 100%;
 }
 
-.countdown .time-box {
-  background: rgba(255, 255, 255, 0.9);
-  padding: 15px 20px;
-  border-radius: 10px;
-  min-width: 80px;
+.bismillah-hero {
+  font-family: var(--font-arabic);
+  font-size: clamp(1.6rem, 5vw, 2.4rem);
+  color: var(--gold-light);
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+  text-shadow: 0 2px 15px rgba(201,164,76,0.4);
 }
 
-.countdown .time {
+.invitation-label {
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: var(--gold);
+  font-size: 1.1rem;
+  letter-spacing: 3px;
+  margin-bottom: 6px;
+}
+
+.invitation-sub {
+  font-family: var(--font-sans);
+  font-weight: 300;
+  color: rgba(255,255,255,0.6);
+  font-size: 0.85rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+.hero-names {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 20px;
+}
+
+.name-bride, .name-groom {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 8vw, 4.5rem);
+  line-height: 1.1;
+  color: var(--white);
+  text-shadow: 0 2px 25px rgba(201,164,76,0.5);
+}
+
+.name-bride { color: var(--gold-light); }
+
+.hero-ampersand {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  color: var(--gold);
+  line-height: 0.8;
+}
+
+.hero-date-badge {
+  display: inline-block;
+  border: 1px solid var(--gold);
+  border-radius: 50px;
+  padding: 8px 28px;
+  margin-bottom: 28px;
+  background: rgba(201,164,76,0.08);
+}
+
+.hero-date-text {
+  font-family: var(--font-serif);
+  color: var(--gold-light);
+  font-size: 1rem;
+  letter-spacing: 2px;
+}
+
+/* Countdown */
+.countdown {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 36px;
+  flex-wrap: wrap;
+}
+
+.time-box {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(201,164,76,0.4);
+  border-radius: 12px;
+  padding: 14px 18px;
+  min-width: 72px;
+  backdrop-filter: blur(10px);
+  text-align: center;
+}
+
+.time {
+  display: block;
+  font-family: var(--font-sans);
   font-size: 2rem;
-  font-weight: bold;
+  font-weight: 600;
+  color: var(--gold-light);
+  line-height: 1;
+}
+
+.time-box small {
+  color: rgba(255,255,255,0.55);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 4px;
   display: block;
 }
 
-.undangan {
-  background: linear-gradient(to bottom, #faf7f2, #ffffff);
+.time-sep {
+  font-size: 2rem;
+  color: var(--gold);
+  font-weight: 300;
+  margin-bottom: 20px;
 }
 
-.serif-title {
-  font-family: 'Great Vibes', cursive;
-  font-size: 3rem;
+.btn-open-invitation {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 38px;
+  border-radius: 50px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  color: var(--navy);
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-decoration: none;
+  box-shadow: 0 6px 30px rgba(201,164,76,0.5);
+  transition: all 0.3s ease;
 }
 
-.divider {
-  width: 80px;
-  height: 3px;
-  background: #c9a44c;
+.btn-open-invitation:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(201,164,76,0.65);
+  color: var(--navy);
+}
+
+/* ---- SHARED ---- */
+.container-inner {
+  max-width: 860px;
   margin: 0 auto;
+  padding: 0 20px;
 }
 
-.undangan-desc {
-  max-width: 700px;
-  margin: 0 auto;
-  color: #555;
+.text-center { text-align: center; }
+
+.section-label {
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: var(--gold-dark);
+  font-size: 0.95rem;
+  letter-spacing: 2px;
+  margin-bottom: 8px;
 }
 
-.nama-mempelai {
-  font-family: 'Great Vibes', cursive;
+.section-title {
+  font-family: var(--font-script);
+  font-size: clamp(2.2rem, 6vw, 3.5rem);
+  color: var(--navy);
+  margin-bottom: 12px;
+}
+
+.gold-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.gold-divider::before,
+.gold-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold));
+  max-width: 120px;
+}
+
+.gold-divider::after {
+  background: linear-gradient(to left, transparent, var(--gold));
+}
+
+.gold-divider span {
+  color: var(--gold);
+  font-size: 1.1rem;
+}
+
+.section-ornament-top,
+.section-ornament-bottom {
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(to right, transparent, var(--gold), transparent);
+  opacity: 0.5;
+}
+
+.mt-ayat { margin-top: 28px; }
+
+/* ---- AYAT SECTION ---- */
+.section-ayat {
+  padding: 80px 20px;
+  background: linear-gradient(180deg, var(--cream) 0%, var(--cream-dark) 100%);
+  position: relative;
+}
+
+.section-ayat::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+.bismillah-wrap {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.bismillah-arabic {
+  font-family: var(--font-arabic);
+  font-size: clamp(1.8rem, 5vw, 2.8rem);
+  color: var(--navy);
+  letter-spacing: 3px;
+  margin-bottom: 8px;
+}
+
+.bismillah-trans {
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: var(--text-light);
+  font-size: 1rem;
+}
+
+.ayat-box {
+  background: var(--white);
+  border-left: 4px solid var(--gold);
+  border-radius: 0 16px 16px 0;
+  padding: 28px 32px;
+  box-shadow: 0 4px 30px rgba(0,0,0,0.06);
+  text-align: right;
+}
+
+.ayat-arabic {
+  font-family: var(--font-arabic);
+  font-size: clamp(1.3rem, 3.5vw, 1.9rem);
+  line-height: 2.2;
+  color: var(--navy);
+  margin-bottom: 16px;
+  direction: rtl;
+}
+
+.ayat-trans {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--text-light);
+  line-height: 1.8;
+  text-align: left;
+  margin-bottom: 8px;
+}
+
+.ayat-source {
+  text-align: center;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  color: var(--gold-dark);
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.hadits-box {
+  margin-top: 28px;
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+  border-radius: 16px;
+  padding: 32px;
+  text-align: center;
+  box-shadow: 0 8px 40px rgba(26,39,68,0.15);
+}
+
+.hadits-icon {
+  font-size: 2rem;
+  color: var(--gold-light);
+  margin-bottom: 12px;
+}
+
+.hadits-text {
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: rgba(255,255,255,0.85);
+  font-size: 1.1rem;
+  line-height: 1.9;
+  margin-bottom: 10px;
+}
+
+.hadits-source {
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  color: var(--gold-light);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+/* ---- MEMPELAI SECTION ---- */
+.section-mempelai {
+  padding: 80px 20px;
+  background: var(--white);
+  position: relative;
+}
+
+.mempelai-intro {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  color: var(--text-light);
+  font-style: italic;
+  max-width: 600px;
+  margin: 0 auto 48px;
+  line-height: 1.8;
+}
+
+.mempelai-cards {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.mempelai-card {
+  background: linear-gradient(160deg, var(--cream) 0%, var(--white) 100%);
+  border: 1px solid rgba(201,164,76,0.3);
+  border-radius: 20px;
+  padding: 40px 32px;
+  width: 260px;
+  text-align: center;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.07);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.mempelai-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 60px rgba(201,164,76,0.2);
+}
+
+.mempelai-icon {
   font-size: 2.5rem;
+  color: var(--gold);
+  margin-bottom: 14px;
 }
 
-.nama-mempelai span {
-  color: #c9a44c;
+.mempelai-wanita .mempelai-icon { color: #C06080; }
+.mempelai-pria .mempelai-icon   { color: #4070A0; }
+
+.mempelai-name {
+  font-family: var(--font-display);
+  font-size: 2.1rem;
+  color: var(--navy);
+  margin-bottom: 12px;
+  line-height: 1.1;
+}
+
+.mempelai-parents {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  color: var(--text-light);
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+
+.mempelai-parents strong { color: var(--text); }
+
+.mempelai-tag {
+  display: inline-block;
+  padding: 5px 16px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  color: var(--white);
+  border-radius: 30px;
+  font-size: 0.72rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.mempelai-ampersand {
+  text-align: center;
+  padding: 0 10px;
+}
+
+.big-amp {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 8vw, 5rem);
+  color: var(--gold);
+  display: block;
+  line-height: 1;
+  text-shadow: 0 2px 20px rgba(201,164,76,0.35);
+}
+
+/* ---- ACARA SECTION ---- */
+.section-acara {
+  padding: 80px 20px;
+  background: linear-gradient(180deg, var(--cream-dark) 0%, var(--cream) 100%);
+  position: relative;
+}
+
+.acara-cards {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
 }
 
 .acara-card {
+  background: var(--white);
   border-radius: 20px;
-  border: none;
+  padding: 36px 28px;
+  width: 300px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.08);
+  border-top: 4px solid var(--gold);
   transition: transform 0.3s ease;
 }
 
-.acara-card:hover {
-  transform: translateY(-8px);
-}
+.acara-card:hover { transform: translateY(-6px); }
 
-.icon-acara {
+.acara-icon {
   font-size: 2.5rem;
+  margin-bottom: 14px;
 }
 
-.btn-gold {
-  background: #c9a44c;
-  color: #fff;
-  border-radius: 30px;
-  padding: 10px 30px;
+.acara-title {
+  font-family: var(--font-serif);
+  font-size: 1.6rem;
+  color: var(--navy);
+  margin-bottom: 12px;
 }
 
-.btn-gold:hover {
-  background: #b38f3a;
-  color: #fff;
+.acara-divider {
+  width: 50px;
+  height: 2px;
+  background: var(--gold);
+  margin: 0 auto 20px;
 }
 
-.penutup {
-  max-width: 700px;
+.acara-detail {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 14px;
+  text-align: left;
+}
+
+.acara-detail i {
+  color: var(--gold-dark);
+  font-size: 1rem;
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+
+.acara-detail div {
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.acara-detail small {
+  color: var(--text-light);
+  font-size: 0.78rem;
+}
+
+.btn-maps {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 32px;
+  border-radius: 50px;
+  background: var(--navy);
+  color: var(--gold-light);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 25px rgba(26,39,68,0.25);
+}
+
+.btn-maps:hover {
+  background: var(--navy-mid);
+  color: var(--gold-light);
+  transform: translateY(-2px);
+}
+
+/* ---- DRESS CODE ---- */
+.section-dresscode {
+  padding: 70px 20px;
+  background: var(--navy);
+  color: var(--white);
+}
+
+.section-dresscode .section-title { color: var(--gold-light); }
+.section-dresscode .section-label { color: var(--gold); }
+
+.dresscode-wrap {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.dresscode-item {
+  text-align: center;
+}
+
+.dresscode-color {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  margin: 0 auto 10px;
+  border: 3px solid rgba(255,255,255,0.2);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+.dresscode-item p {
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  color: rgba(255,255,255,0.7);
+}
+
+.dresscode-note {
+  font-size: 0.78rem;
+  color: var(--gold-light);
+  font-style: italic;
+  margin-top: 10px;
+}
+
+/* ---- DOA / UCAPAN ---- */
+.section-doa {
+  padding: 80px 20px;
+  background: var(--white);
+}
+
+.doa-desc {
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: var(--text-light);
+  font-size: 1rem;
+  margin-bottom: 28px;
+}
+
+.doa-form-wrap {
+  max-width: 520px;
   margin: 0 auto;
-  color: #555;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
-.nama-penutup {
-  font-family: 'Great Vibes', cursive;
-  font-size: 2rem;
-}
-
-.ornament-top,
-.ornament-bottom {
-  position: absolute;
+.doa-input,
+.doa-textarea {
   width: 100%;
-  height: 60px;
-  background: linear-gradient(to right, transparent, #c9a44c, transparent);
-  opacity: 0.15;
+  padding: 14px 18px;
+  border: 1.5px solid rgba(201,164,76,0.35);
+  border-radius: 12px;
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  color: var(--text);
+  background: var(--cream);
+  outline: none;
+  transition: border-color 0.3s;
+  resize: vertical;
 }
 
-.ornament-top {
-  top: 0;
+.doa-input:focus,
+.doa-textarea:focus {
+  border-color: var(--gold);
 }
 
-.ornament-bottom {
-  bottom: 0;
+.btn-kirim {
+  padding: 13px 28px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  color: var(--white);
+  border: none;
+  border-radius: 50px;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 6px 25px rgba(201,164,76,0.4);
+  transition: all 0.3s;
+  align-self: flex-end;
 }
 
+.btn-kirim:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 35px rgba(201,164,76,0.55);
+}
+
+.ucapan-list {
+  max-width: 520px;
+  margin: 28px auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.ucapan-item {
+  background: var(--cream);
+  border-radius: 12px;
+  padding: 16px 20px;
+  text-align: left;
+  border-left: 3px solid var(--gold);
+}
+
+.ucapan-item strong {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--navy);
+  margin-bottom: 4px;
+}
+
+.ucapan-item p {
+  font-size: 0.88rem;
+  color: var(--text-light);
+  line-height: 1.6;
+}
+
+/* ---- PENUTUP ---- */
+.section-penutup {
+  padding: 80px 20px;
+  background: linear-gradient(180deg, var(--cream-dark) 0%, var(--cream) 100%);
+  position: relative;
+  text-align: center;
+}
+
+.penutup-content {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.penutup-text {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  color: var(--text-light);
+  line-height: 1.9;
+  font-style: italic;
+  margin-bottom: 12px;
+}
+
+.mt-1 { margin-top: 1rem; }
+
+.wasalam {
+  margin: 28px 0 24px;
+  padding: 16px 28px;
+  background: var(--navy);
+  border-radius: 12px;
+  display: inline-block;
+}
+
+.wasalam span {
+  font-family: var(--font-arabic);
+  font-size: clamp(1.3rem, 4vw, 1.8rem);
+  color: var(--gold-light);
+  letter-spacing: 2px;
+}
+
+.ttd-label {
+  font-size: 0.8rem;
+  color: var(--text-light);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+
+.ttd-names {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 7vw, 3.8rem);
+  color: var(--navy);
+  line-height: 1.15;
+}
+
+.ttd-amp {
+  color: var(--gold);
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3rem);
+}
+
+/* ---- FOOTER ---- */
+.site-footer {
+  background: var(--navy);
+  color: rgba(255,255,255,0.45);
+  text-align: center;
+  padding: 20px;
+  font-size: 0.78rem;
+  letter-spacing: 1px;
+}
+
+/* ---- FADE ANIMATIONS ---- */
+.fade-in {
+  animation: fadeIn 1.2s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-left {
+  animation: slideLeft 0.8s ease forwards;
+}
+
+.animate-right {
+  animation: slideRight 0.8s ease forwards;
+}
+
+@keyframes slideLeft {
+  from { opacity: 0; transform: translateX(-40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideRight {
+  from { opacity: 0; transform: translateX(40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ---- RESPONSIVE ---- */
+@media (max-width: 640px) {
+  .mempelai-cards {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .mempelai-ampersand { order: 1; }
+  .mempelai-card { width: 100%; max-width: 300px; }
+
+  .acara-cards {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .acara-card { width: 100%; max-width: 340px; }
+
+  .time-box { min-width: 58px; padding: 10px 12px; }
+  .time { font-size: 1.6rem; }
+}

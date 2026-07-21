@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "undangan-lulu-bayu-2026"
-  }
+    "default": "undangan-digital-54a87",
+    "undangan-digital": "undangan-digital-54a87"
+  },
+  "targets": {},
+  "etags": {}
 }

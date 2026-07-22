@@ -13,12 +13,11 @@ if ('serviceWorker' in navigator) {
 
 // ---- COUNTDOWN ----
 
-const SUPABASE_URL = "https://isyaszjtcwumddjrmpfd.supabase.co";
-const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlzeWFzemp0Y3d1bWRkanJtcGZkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODExOTAzNjcsImV4cCI6MjA5Njc2NjM2N30.9hAMeOnrMJddS2WwRF1JWou0-7oPGfkqgINa7ydzmkM";
+
 
 const supaclient = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
+  import.meta.env.VITE_SUPABASE_URL,
+  import.meta.env.VITE_SUPABASE_ANON_KEY
 );
 const eventDate = new Date("2026-08-16T08:00:00+07:00").getTime();
 

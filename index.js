@@ -16,8 +16,8 @@ if ('serviceWorker' in navigator) {
 
 
 const supaclient = window.supabase.createClient(
-  import.meta.env.VITE_SUPABASE_URL,
-  import.meta.env.VITE_SUPABASE_ANON_KEY
+  import.meta.env.SUPABASE_URL,
+  import.meta.env.SUPABASE_ANON_KEY
 );
 const eventDate = new Date("2026-08-16T08:00:00+07:00").getTime();
 

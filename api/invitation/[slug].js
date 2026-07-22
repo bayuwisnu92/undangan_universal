@@ -5,6 +5,9 @@ const supabase = createClient(
     process.env.VITE_SUPABASE_ANON_KEY
 )
 
+console.log("URL:", process.env.VITE_SUPABASE_URL);
+console.log("KEY:", process.env.VITE_SUPABASE_ANON_KEY ? "ADA" : "TIDAK ADA");
+
 export default async function handler(req, res) {
 
     const { slug } = req.query

@@ -20,7 +20,18 @@ export const TemplateDark: React.FC<TemplateProps> = ({ data }) => {
     <div className="template-dark">
       <MusicPlayer musicUrl={data.music_url || ''} />
 
-      <section id="hero">
+      <section
+  id="hero"
+  style={{
+    backgroundImage: `
+      linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)),
+      url(${data.cover_bg_image})
+    `,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat'
+  }}
+>
         <div style={{ textAlign: 'center' }}>
           <p style={{ letterSpacing: '4px', textTransform: 'uppercase', fontSize: '0.9rem' }}>The Wedding Celebration</p>
           <h1 className="hero-names">{data.bride_name} &amp; {data.groom_name}</h1>

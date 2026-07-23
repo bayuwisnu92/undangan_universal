@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { getWeddingById, submitPaymentReceipt } from '../services/weddingService';
 import type { WeddingData } from '../types/wedding';
 import { LoadingScreen } from '../components/LoadingScreen';
-import { supabase } from '../services/supabaseClient';
+import { supabaseClient } from '../services/supabaseClient';
 
 export const PaymentPendingPage: React.FC = () => {
   const { weddingId } = useParams<{ weddingId: string }>();
@@ -30,7 +30,7 @@ export const PaymentPendingPage: React.FC = () => {
     if (!weddingId) return;
 
     // Subscribe to real-time updates for this specific wedding record
-    const channel = supabase
+    const channel = supabaseClient
       .channel(`wedding-payment-${weddingId}`)
       .on(
         'postgres_changes',
@@ -48,7 +48,7 @@ export const PaymentPendingPage: React.FC = () => {
       .subscribe();
 
     return () => {
-      supabase.removeChannel(channel);
+      supabaseClient.removeChannel(channel);
     };
   }, [weddingId]);
 
@@ -236,7 +236,7 @@ export const PaymentPendingPage: React.FC = () => {
         ) : (
           <div>
             <p style={{ color: '#94a3b8', fontSize: '0.9rem', marginBottom: '25px', lineHeight: 1.6 }}>
-              Silakan lakukan transfer sebesar <strong>Rp 149.000,-</strong> ke salah satu rekening di bawah ini:
+              Silakan lakukan transfer sebesar <strong>Rp 100.000,-</strong> ke salah satu rekening di bawah ini:
             </p>
             
             <div style={{
@@ -247,13 +247,10 @@ export const PaymentPendingPage: React.FC = () => {
               marginBottom: '30px'
             }}>
               <div style={{ background: '#0f172a', padding: '15px', borderRadius: '12px' }}>
-                <small style={{ color: '#64748b', display: 'block' }}>BANK MANDIRI</small>
-                <strong>123-000-4567-890</strong> <span style={{ color: '#94a3b8', fontSize: '0.8rem' }}>a.n. PT Universal Wedding</span>
+                <small style={{ color: '#64748b', display: 'block' }}>BANK BRI</small>
+                <strong>7019-0101-2538-530</strong> <span style={{ color: '#94a3b8', fontSize: '0.8rem' }}>Bayu Wisnu Aji</span>
               </div>
-              <div style={{ background: '#0f172a', padding: '15px', borderRadius: '12px' }}>
-                <small style={{ color: '#64748b', display: 'block' }}>BANK BCA</small>
-                <strong>883-492-3841</strong> <span style={{ color: '#94a3b8', fontSize: '0.8rem' }}>a.n. PT Universal Wedding</span>
-              </div>
+              
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', textAlign: 'left' }}>

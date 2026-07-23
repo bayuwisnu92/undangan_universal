@@ -1,4 +1,4 @@
-import { supabase } from './supabaseClient';
+import { supabaseClient } from './supabaseClient';
 import type { WeddingData } from '../types/wedding';
 
 // Mock data fallback khusus untuk menjamin Live Demo selalu berfungsi
@@ -158,7 +158,7 @@ export const mockWeddings: Record<string, WeddingData> = {
 // Fetch single wedding by slug from Supabase (with Mock Fallback for Demo slugs)
 export async function getWeddingBySlug(slug: string): Promise<WeddingData> {
   try {
-    const { data, error } = await supabase
+    const { data, error } = await supabaseClient
       .from('weddings')
       .select('*')
       .eq('slug', slug)
@@ -182,7 +182,7 @@ export async function getWeddingBySlug(slug: string): Promise<WeddingData> {
 // Fetch single wedding by ID from Supabase (with Mock Fallback)
 export async function getWeddingById(id: string): Promise<WeddingData> {
   try {
-    const { data, error } = await supabase
+    const { data, error } = await supabaseClient
       .from('weddings')
       .select('*')
       .eq('id', id)
@@ -204,7 +204,7 @@ export async function getWeddingById(id: string): Promise<WeddingData> {
 // List all weddings for admin panel from Supabase (merging Supabase items and mocks for full view)
 export async function getAllWeddings(): Promise<WeddingData[]> {
   try {
-    const { data, error } = await supabase
+    const { data, error } = await supabaseClient  
       .from('weddings')
       .select('*')
       .order('created_at', { ascending: false });
@@ -247,7 +247,7 @@ export async function createWeddingOrder(
     music_url: 'asset/spike.mp3'
   };
 
-  const { data, error } = await supabase
+  const { data, error } = await supabaseClient
     .from('weddings')
     .insert([newWedding])
     .select()
@@ -261,7 +261,7 @@ export async function createWeddingOrder(
 
 // Submit payment receipt file directly to Supabase
 export async function submitPaymentReceipt(id: string, receiptBase64: string): Promise<WeddingData> {
-  const { data, error } = await supabase
+  const { data, error } = await supabaseClient
     .from('weddings')
     .update({ payment_status: 'pending', receipt_url: receiptBase64 })
     .eq('id', id)
@@ -276,7 +276,7 @@ export async function submitPaymentReceipt(id: string, receiptBase64: string): P
 
 // Admin confirms payment approval in Supabase
 export async function adminConfirmPayment(id: string): Promise<WeddingData> {
-  const { data, error } = await supabase
+  const { data, error } = await supabaseClient  
     .from('weddings')
     .update({ payment_status: 'paid' })
     .eq('id', id)
@@ -299,7 +299,7 @@ export async function updateWeddingDetails(
     is_configured: true
   };
 
-  const { data, error } = await supabase
+  const { data, error } = await supabaseClient
     .from('weddings')
     .update(updates)
     .eq('id', id)

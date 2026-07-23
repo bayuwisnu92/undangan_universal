@@ -51,7 +51,12 @@ export const TemplateElegant: React.FC<TemplateProps> = ({ data }) => {
 
       {/* Hero Section */}
       <section id="hero">
-        <div className="hero-overlay"></div>
+        <div
+    className="hero-overlay"
+    style={{
+      backgroundImage: `url(${data.cover_bg_image})`
+    }}
+  ></div>
         <div className="hero-particles">
           <span></span><span></span><span></span><span></span><span></span>
           <span></span><span></span><span></span><span></span><span></span>

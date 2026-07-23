@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { supabase } from '../services/supabaseClient';
+import { supabaseClient } from '../services/supabaseClient';
 
 export interface WishItem {
   id: string;
@@ -18,7 +18,7 @@ export function useGuestBook(weddingId?: string) {
   const fetchWishes = async () => {
     try {
       setLoading(true);
-      let query = supabase
+      let query = supabaseClient
         .from('ucapan')
         .select('*')
         .order('created_at', { ascending: false });
@@ -52,7 +52,7 @@ export function useGuestBook(weddingId?: string) {
         insertData.wedding_id = weddingId;
       }
       
-      const { error: insertErr } = await supabase
+      const { error: insertErr } = await supabaseClient
         .from('ucapan')
         .insert([insertData]);
 
@@ -71,7 +71,7 @@ export function useGuestBook(weddingId?: string) {
     fetchWishes();
 
     // Subscribe to Postgres changes for real-time updates
-    const channel = supabase
+    const channel = supabaseClient
       .channel('ucapan-changes')
       .on(
         'postgres_changes',
@@ -87,7 +87,7 @@ export function useGuestBook(weddingId?: string) {
       .subscribe();
 
     return () => {
-      supabase.removeChannel(channel);
+      supabaseClient.removeChannel(channel);
     };
   }, [weddingId]);
 

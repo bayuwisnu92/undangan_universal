@@ -3,6 +3,7 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { getWeddingById, updateWeddingDetails } from '../services/weddingService';
 import type { WeddingData } from '../types/wedding';
 import { LoadingScreen } from '../components/LoadingScreen';
+import { supabaseClient } from "../services/supabaseClient";
 
 export const SetupWeddingPage: React.FC = () => {
   const { weddingId } = useParams<{ weddingId: string }>();
@@ -36,6 +37,11 @@ export const SetupWeddingPage: React.FC = () => {
   const [mapsUrl, setMapsUrl] = useState('https://maps.app.goo.gl/abeHsbATGtEhxFf26');
   const [mapsIframeUrl, setMapsIframeUrl] = useState('https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15842.40926540292!2d107.58919485541989!3d-6.938040799999994!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68e63a66953993%3A0x248047e0057191ae!2sPT.%20Inti%20(Persero)!5e0!3m2!1sid!2sid!4v1781082382014!5m2!1sid!2sid');
   const [musicUrl, setMusicUrl] = useState('asset/spike.mp3');
+
+  const [, setCoverFile] = useState<File | null>(null);
+const [coverPreview, setCoverPreview] = useState("");
+const [coverBgImage, setCoverBgImage] = useState("");
+const [uploadingCover, setUploadingCover] = useState(false);
 
   useEffect(() => {
     const fetchWedding = async () => {
@@ -71,6 +77,8 @@ export const SetupWeddingPage: React.FC = () => {
         setMapsUrl(data.maps_url || 'https://maps.app.goo.gl/abeHsbATGtEhxFf26');
         setMapsIframeUrl(data.maps_iframe_url || 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15842.40926540292!2d107.58919485541989!3d-6.938040799999994!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68e63a66953993%3A0x248047e0057191ae!2sPT.%20Inti%20(Persero)!5e0!3m2!1sid!2sid!4v1781082382014!5m2!1sid!2sid');
         setMusicUrl(data.music_url || 'asset/spike.mp3');
+        setCoverBgImage(data.cover_bg_image || '');
+        setCoverPreview(data.cover_bg_image || '');
       } catch (e) {
         console.error(e);
       } finally {
@@ -80,6 +88,62 @@ export const SetupWeddingPage: React.FC = () => {
     fetchWedding();
   }, [weddingId]);
 
+
+  const uploadCoverImage = async (file: File) => {
+
+    try {
+
+        setUploadingCover(true);
+
+        const ext = file.name.split(".").pop();
+
+        const filename =
+            `${weddingId}-${Date.now()}.${ext}`;
+
+        const { error } = await supabaseClient.storage
+            .from("covers")
+            .upload(filename, file, {
+                upsert: true
+            });
+
+        if (error) throw error;
+
+        const { data } = await supabaseClient.storage
+            .from("covers")
+            .getPublicUrl(filename);
+
+        setCoverBgImage(data.publicUrl);
+        setCoverPreview(data.publicUrl);
+
+    } catch (err) {
+
+        console.error(err);
+
+        alert("Upload background gagal.");
+
+    } finally {
+
+        setUploadingCover(false);
+
+    }
+
+}
+
+const handleCoverChange = async (
+    e: React.ChangeEvent<HTMLInputElement>
+) => {
+
+    const file = e.target.files?.[0];
+
+    if (!file) return;
+
+    setCoverFile(file);
+
+    setCoverPreview(URL.createObjectURL(file));
+
+    await uploadCoverImage(file);
+
+}
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!weddingId) return;
@@ -104,7 +168,7 @@ export const SetupWeddingPage: React.FC = () => {
       maps_url: mapsUrl,
       maps_iframe_url: mapsIframeUrl,
       music_url: musicUrl,
-      cover_bg_image: 'bg-wedding.png', // Default system theme images
+      cover_bg_image: coverBgImage, // Default system theme images
       bg_image: 'background.png',
       gallery_images: ['bg-wedding.png', 'background.png']
     };
@@ -451,6 +515,42 @@ export const SetupWeddingPage: React.FC = () => {
               </div>
             </div>
           </div>
+          <div className="form-group">
+
+    <label>Background Cover</label>
+
+    {
+
+        coverPreview &&
+
+        <img
+            src={coverPreview}
+            style={{
+                width: "100%",
+                maxWidth: 450,
+                borderRadius: 12,
+                marginBottom: 15,
+                objectFit: "cover"
+            }}
+        />
+
+    }
+
+    <input
+        type="file"
+        accept="image/*"
+        onChange={handleCoverChange}
+    />
+
+    {
+
+        uploadingCover &&
+
+        <p>Mengupload...</p>
+
+    }
+
+</div>
 
           {/* SUBMIT BUTTON */}
           <button

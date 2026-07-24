@@ -345,58 +345,37 @@
 
 /* ---------- COVER PHOTO ---------- */
 
-/* ---------- COVER PHOTO ---------- */
-
-.template-minimal .cover-photo{
-    position:relative;
-    width:100%;
-    height:85vh;
-    overflow:hidden;
+.template-minimal .cover-photo {
+  display: flex;
+  justify-content: center;
+  padding: 60px 20px;
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--border-color);
 }
 
-.template-minimal .cover-photo img{
-    width:100%;
-    height:100%;
-    display:block;
-    object-fit:cover;
-    object-position:center;
-
-    animation:coverZoom 18s ease-in-out infinite alternate;
+.template-minimal .cover-photo img {
+  width: 100%;
+  max-width: 480px;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+  border-radius: 4px;
+  box-shadow: 0 16px 50px rgba(0, 0, 0, 0.12);
+  animation: coverZoom 18s ease-in-out infinite alternate;
 }
 
-/* Overlay navy transparan */
-.template-minimal .cover-photo::before{
-    content:"";
-    position:absolute;
-    inset:0;
-    background:rgba(38,50,82,.35);
-    z-index:1;
+@keyframes coverZoom {
+  from { transform: scale(1); }
+  to { transform: scale(1.04); }
 }
 
-/* Fade putih ke section berikutnya */
-.template-minimal .cover-photo::after{
-    content:"";
-    position:absolute;
-    left:0;
-    right:0;
-    bottom:0;
-    height:180px;
-
-    background:linear-gradient(
-        to bottom,
-        rgba(255,255,255,0),
-        #fff
-    );
-
-    z-index:2;
+@media (max-width: 640px) {
+  .template-minimal .cover-photo {
+    padding: 40px 16px;
+  }
+  .template-minimal .cover-photo img {
+    max-width: 100%;
+    border-radius: 2px;
+  }
 }
-
-@keyframes coverZoom{
-    from{
-        transform:scale(1);
-    }
-    to{
-        transform:scale(1.05);
-    }
-}
-

@@ -39,15 +39,14 @@ export const TemplateMinimal: React.FC<TemplateProps> = ({ data }) => {
       </section>
 
       <main id="content">
-
-        {data.cover_bg_image && (
-    <section className="cover-photo">
-      <img
-        src={data.cover_bg_image}
-        alt={`${data.bride_name} & ${data.groom_name}`}
-      />
-    </section>
-  )}
+        {(data.bg_image || data.cover_bg_image) && (
+          <section className="cover-photo">
+            <img
+              src={data.bg_image || data.cover_bg_image}
+              alt={`${data.bride_name} & ${data.groom_name}`}
+            />
+          </section>
+        )}
 
   <section style={{ textAlign: 'center' }}></section>
         <section style={{ textAlign: 'center' }}>

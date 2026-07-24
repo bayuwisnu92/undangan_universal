@@ -46,11 +46,11 @@ export const TemplateDark: React.FC<TemplateProps> = ({ data }) => {
       </section>
 
       <main id="content">
-        {data.cover_bg_image && (
+        {(data.bg_image || data.cover_bg_image) && (
           <section className="cover-photo-section">
             <div className="cover-photo-container">
               <img
-                src={data.cover_bg_image}
+                src={data.bg_image || data.cover_bg_image}
                 alt={`${data.bride_name} & ${data.groom_name}`}
                 className="cover-photo-img"
               />

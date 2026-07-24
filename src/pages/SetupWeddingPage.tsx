@@ -43,6 +43,11 @@ const [coverPreview, setCoverPreview] = useState("");
 const [coverBgImage, setCoverBgImage] = useState("");
 const [uploadingCover, setUploadingCover] = useState(false);
 
+const [, setPrewedFile] = useState<File | null>(null);
+const [prewedPreview, setPrewedPreview] = useState("");
+const [bgImage, setBgImage] = useState("");
+const [uploadingPrewed, setUploadingPrewed] = useState(false);
+
   useEffect(() => {
     const fetchWedding = async () => {
       if (!weddingId) return;
@@ -79,6 +84,8 @@ const [uploadingCover, setUploadingCover] = useState(false);
         setMusicUrl(data.music_url || 'asset/spike.mp3');
         setCoverBgImage(data.cover_bg_image || '');
         setCoverPreview(data.cover_bg_image || '');
+        setBgImage(data.bg_image || '');
+        setPrewedPreview(data.bg_image || '');
       } catch (e) {
         console.error(e);
       } finally {
@@ -144,6 +151,45 @@ const handleCoverChange = async (
     await uploadCoverImage(file);
 
 }
+
+const uploadPrewedImage = async (file: File) => {
+    try {
+        setUploadingPrewed(true);
+
+        const ext = file.name.split(".").pop();
+        const filename = `prewed-${weddingId}-${Date.now()}.${ext}`;
+
+        const { error } = await supabaseClient.storage
+            .from("covers")
+            .upload(filename, file, { upsert: true });
+
+        if (error) throw error;
+
+        const { data } = await supabaseClient.storage
+            .from("covers")
+            .getPublicUrl(filename);
+
+        setBgImage(data.publicUrl);
+        setPrewedPreview(data.publicUrl);
+
+    } catch (err) {
+        console.error(err);
+        alert("Upload foto prewedding gagal.");
+    } finally {
+        setUploadingPrewed(false);
+    }
+}
+
+const handlePrewedChange = async (
+    e: React.ChangeEvent<HTMLInputElement>
+) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setPrewedFile(file);
+    setPrewedPreview(URL.createObjectURL(file));
+    await uploadPrewedImage(file);
+}
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!weddingId) return;
@@ -168,8 +214,8 @@ const handleCoverChange = async (
       maps_url: mapsUrl,
       maps_iframe_url: mapsIframeUrl,
       music_url: musicUrl,
-      cover_bg_image: coverBgImage, // Default system theme images
-      bg_image: 'background.png',
+      cover_bg_image: coverBgImage,
+      bg_image: bgImage || undefined,
       gallery_images: ['bg-wedding.png', 'background.png']
     };
 
@@ -515,42 +561,58 @@ const handleCoverChange = async (
               </div>
             </div>
           </div>
-          <div className="form-group">
+          {/* UPLOAD FOTO */}
+          <div style={{ background: '#1e293b', padding: '30px', borderRadius: '20px', border: '1px solid rgba(255,255,255,0.05)' }}>
+            <h3 style={{ borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: '12px', marginBottom: '24px', color: '#f59e0b' }}>📸 Upload Foto</h3>
 
-    <label>Background Cover</label>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
 
-    {
+              {/* Cover Background (for hero & OG image) */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                <label style={{ fontSize: '0.9rem', fontWeight: 600, color: '#a855f7' }}>🖼️ Cover / Background Undangan</label>
+                <p style={{ fontSize: '0.75rem', color: '#94a3b8', margin: 0 }}>Tampil sebagai hero utama & thumbnail link share WhatsApp</p>
+                {coverPreview && (
+                  <img
+                    src={coverPreview}
+                    style={{ width: '100%', height: '180px', borderRadius: '10px', objectFit: 'cover', border: '2px solid rgba(168,85,247,0.4)' }}
+                    alt="Preview cover"
+                  />
+                )}
+                <label style={{
+                  display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+                  gap: '8px', padding: '16px', borderRadius: '10px', border: '2px dashed rgba(168,85,247,0.4)',
+                  cursor: 'pointer', backgroundColor: 'rgba(168,85,247,0.05)', transition: '0.2s'
+                }}>
+                  <span style={{ fontSize: '1.5rem' }}>🖼️</span>
+                  <span style={{ fontSize: '0.8rem', color: '#94a3b8' }}>{uploadingCover ? 'Mengupload...' : 'Klik untuk pilih gambar'}</span>
+                  <input type="file" accept="image/*" onChange={handleCoverChange} style={{ display: 'none' }} />
+                </label>
+              </div>
 
-        coverPreview &&
+              {/* Prewedding Photo (displayed in body section) */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                <label style={{ fontSize: '0.9rem', fontWeight: 600, color: '#22c55e' }}>📷 Foto Prewedding</label>
+                <p style={{ fontSize: '0.75rem', color: '#94a3b8', margin: 0 }}>Tampil sebagai foto showcase setelah hero undangan</p>
+                {prewedPreview && (
+                  <img
+                    src={prewedPreview}
+                    style={{ width: '100%', height: '180px', borderRadius: '10px', objectFit: 'cover', border: '2px solid rgba(34,197,94,0.4)' }}
+                    alt="Preview prewedding"
+                  />
+                )}
+                <label style={{
+                  display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+                  gap: '8px', padding: '16px', borderRadius: '10px', border: '2px dashed rgba(34,197,94,0.4)',
+                  cursor: 'pointer', backgroundColor: 'rgba(34,197,94,0.05)', transition: '0.2s'
+                }}>
+                  <span style={{ fontSize: '1.5rem' }}>📷</span>
+                  <span style={{ fontSize: '0.8rem', color: '#94a3b8' }}>{uploadingPrewed ? 'Mengupload...' : 'Klik untuk pilih gambar'}</span>
+                  <input type="file" accept="image/*" onChange={handlePrewedChange} style={{ display: 'none' }} />
+                </label>
+              </div>
 
-        <img
-            src={coverPreview}
-            style={{
-                width: "100%",
-                maxWidth: 450,
-                borderRadius: 12,
-                marginBottom: 15,
-                objectFit: "cover"
-            }}
-        />
-
-    }
-
-    <input
-        type="file"
-        accept="image/*"
-        onChange={handleCoverChange}
-    />
-
-    {
-
-        uploadingCover &&
-
-        <p>Mengupload...</p>
-
-    }
-
-</div>
+            </div>
+          </div>
 
           {/* SUBMIT BUTTON */}
           <button

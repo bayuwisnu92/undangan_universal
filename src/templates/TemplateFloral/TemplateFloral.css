@@ -505,3 +505,44 @@ img{
     padding: 24px 16px;
   }
 }
+
+/* ---- COVER PHOTO SHOWCASE SECTION ---- */
+.template-floral .cover-photo-section {
+  padding: 0 !important;
+  margin: 0;
+  border-bottom: 1px solid rgba(133, 159, 132, 0.2);
+}
+
+.template-floral .cover-photo-container {
+  position: relative;
+  width: 100%;
+  height: 80vh;
+  min-height: 480px;
+  overflow: hidden;
+}
+
+.template-floral .cover-photo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  animation: coverFloralZoom 20s ease-in-out infinite alternate;
+}
+
+.template-floral .cover-photo-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(244, 247, 243, 0.4) 0%,
+    rgba(244, 247, 243, 0.1) 40%,
+    rgba(244, 247, 243, 0.75) 80%,
+    #f4f7f3 100%
+  );
+}
+
+@keyframes coverFloralZoom {
+  from { transform: scale(1); }
+  to { transform: scale(1.05); }
+}
+

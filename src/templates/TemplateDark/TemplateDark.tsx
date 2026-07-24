@@ -46,6 +46,19 @@ export const TemplateDark: React.FC<TemplateProps> = ({ data }) => {
       </section>
 
       <main id="content">
+        {data.cover_bg_image && (
+          <section className="cover-photo-section">
+            <div className="cover-photo-container">
+              <img
+                src={data.cover_bg_image}
+                alt={`${data.bride_name} & ${data.groom_name}`}
+                className="cover-photo-img"
+              />
+              <div className="cover-photo-overlay"></div>
+            </div>
+          </section>
+        )}
+
         <section>
           <div style={{ maxWidth: '650px', margin: '0 auto' }}>
             <h2 className="section-title">Greeting</h2>

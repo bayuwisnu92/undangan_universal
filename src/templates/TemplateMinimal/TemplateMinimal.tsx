@@ -39,6 +39,17 @@ export const TemplateMinimal: React.FC<TemplateProps> = ({ data }) => {
       </section>
 
       <main id="content">
+
+        {data.cover_bg_image && (
+    <section className="cover-photo">
+      <img
+        src={data.cover_bg_image}
+        alt={`${data.bride_name} & ${data.groom_name}`}
+      />
+    </section>
+  )}
+
+  <section style={{ textAlign: 'center' }}></section>
         <section style={{ textAlign: 'center' }}>
           <div style={{ maxWidth: '650px', margin: '0 auto' }}>
             <h2 className="section-title">Greeting</h2>
@@ -48,6 +59,12 @@ export const TemplateMinimal: React.FC<TemplateProps> = ({ data }) => {
             <p style={{ fontSize: '0.8rem', marginTop: '10px', letterSpacing: '1px' }}>QS. AR-RUM : 21</p>
           </div>
         </section>
+        
+
+  
+
+  <section style={{ textAlign: 'center' }}></section>
+        
 
         <section style={{ textAlign: 'center' }}>
           <h2 className="section-title">The Happy Couple</h2>

@@ -79,6 +79,10 @@
   border-bottom: 1px solid var(--border-color);
 }
 
+.template-minimal #content > section:first-child {
+  padding-top: 0;
+}
+
 .template-minimal .section-title {
   font-family: var(--font-serif);
   font-size: 2.5rem;
@@ -253,6 +257,9 @@
   .template-minimal #hero {
     padding: 30px 16px;
   }
+  .template-minimal .cover-photo{
+    height:55vh;
+}
 
   .template-minimal .countdown {
     gap: 8px;
@@ -305,6 +312,9 @@
     font-size: clamp(2rem, 10vw, 3rem);
     margin: 20px 0;
   }
+  .template-minimal .cover-photo img{
+    height:45vh;
+}
 
   .template-minimal .countdown {
     gap: 6px;
@@ -332,3 +342,61 @@
     padding: 30px 16px;
   }
 }
+
+/* ---------- COVER PHOTO ---------- */
+
+/* ---------- COVER PHOTO ---------- */
+
+.template-minimal .cover-photo{
+    position:relative;
+    width:100%;
+    height:85vh;
+    overflow:hidden;
+}
+
+.template-minimal .cover-photo img{
+    width:100%;
+    height:100%;
+    display:block;
+    object-fit:cover;
+    object-position:center;
+
+    animation:coverZoom 18s ease-in-out infinite alternate;
+}
+
+/* Overlay navy transparan */
+.template-minimal .cover-photo::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:rgba(38,50,82,.35);
+    z-index:1;
+}
+
+/* Fade putih ke section berikutnya */
+.template-minimal .cover-photo::after{
+    content:"";
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:0;
+    height:180px;
+
+    background:linear-gradient(
+        to bottom,
+        rgba(255,255,255,0),
+        #fff
+    );
+
+    z-index:2;
+}
+
+@keyframes coverZoom{
+    from{
+        transform:scale(1);
+    }
+    to{
+        transform:scale(1.05);
+    }
+}
+

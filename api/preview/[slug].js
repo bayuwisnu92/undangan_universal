@@ -31,10 +31,14 @@ export default async function handler(req, res) {
     const description =
         `${data.akad_date_text ?? ""} ${data.akad_location ?? ""}`;
 
-    const image =
-        data.cover_bg_image
-            ? `https://undangan-universal.vercel.app/${data.cover_bg_image}`
-            : `https://undangan-universal.vercel.app/asset/default-cover.jpg`;
+    let image = "https://undangan-universal.vercel.app/bg-wedding.png";
+    if (data.cover_bg_image) {
+        if (data.cover_bg_image.startsWith("http://") || data.cover_bg_image.startsWith("https://")) {
+            image = data.cover_bg_image;
+        } else {
+            image = `https://undangan-universal.vercel.app/${data.cover_bg_image.replace(/^\//, '')}`;
+        }
+    }
 
     res.setHeader("Content-Type", "text/html");
 
@@ -52,6 +56,7 @@ export default async function handler(req, res) {
 <meta property="og:title" content="${title}" />
 <meta property="og:description" content="${description}" />
 <meta property="og:image" content="${image}" />
+<meta property="og:image:secure_url" content="${image}" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://undangan-universal.vercel.app/preview/${slug}" />
 

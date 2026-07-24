@@ -3,8 +3,8 @@ const APP_ASSETS = [
   '/admin',
   '/index.html',
   '/manifest.webmanifest',
-  '/asset/icon-192.png',
-  '/asset/icon-512.png'
+  '/asset/og-templates-pro.png',
+  '/asset/og-templates-pro.png'
 ];
 
 self.addEventListener('install', event => {

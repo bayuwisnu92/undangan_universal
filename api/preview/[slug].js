@@ -9,6 +9,45 @@ export default async function handler(req, res) {
 
     const { slug } = req.query;
 
+    if (slug === "templates") {
+        const title = "Katalog Undangan Digital Premium - Pilih Desain Impianmu ✨";
+        const description = "Jasa Pembuatan Undangan Digital Elegan & Modern. Fitur Lengkap: Musik, Galeri Foto, Maps, Countdown & Buku Tamu Online. Buat Sekarang!";
+        const image = "https://undangan-universal.vercel.app/og-templates-pro.png";
+
+        res.setHeader("Content-Type", "text/html");
+        return res.send(`
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8"/>
+<title>${title}</title>
+<meta name="description" content="${description}" />
+
+<meta property="og:title" content="${title}" />
+<meta property="og:description" content="${description}" />
+<meta property="og:image" content="${image}" />
+<meta property="og:image:secure_url" content="${image}" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://undangan-universal.vercel.app/templates" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="${title}" />
+<meta name="twitter:description" content="${description}" />
+<meta name="twitter:image" content="${image}" />
+
+<script>
+window.location.replace("/templates");
+</script>
+</head>
+<body>
+Redirecting to catalog...
+</body>
+</html>
+        `);
+    }
+
     const { data, error } = await supabase
         .from("weddings")
         .select(`

@@ -1,17 +1,10 @@
-const CACHE_NAME = 'lulu-bayu-wedding-v1';
+const CACHE_NAME = 'admin-control-v1';
 const APP_ASSETS = [
-  '/',
+  '/admin',
   '/index.html',
-  '/style.css',
-  '/index.js',
   '/manifest.webmanifest',
-  '/background.png',
-  '/bg-wedding.png',
-  '/asset/spike.mp3',
   '/asset/icon-192.png',
-  '/asset/icon-512.png',
-  '/asset/og-lulu-bayu.png',
-  '/asset/og-lulu-bayu-v2.png'
+  '/asset/icon-512.png'
 ];
 
 self.addEventListener('install', event => {
@@ -33,17 +26,13 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') return;
 
-  event.respondWith(
-    caches.match(event.request).then(cached => {
-      if (cached) return cached;
+  // Hanya perhatikan request untuk scope /admin
+  const url = new URL(event.request.url);
+  if (!url.pathname.startsWith('/admin')) {
+    return;
+  }
 
-      return fetch(event.request)
-        .then(response => {
-          const copy = response.clone();
-          caches.open(CACHE_NAME).then(cache => cache.put(event.request, copy));
-          return response;
-        })
-        .catch(() => caches.match('/index.html'));
-    })
+  event.respondWith(
+    fetch(event.request).catch(() => caches.match('/index.html'))
   );
 });

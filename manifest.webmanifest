@@ -1,13 +1,13 @@
 {
-  "name": "Undangan Pernikahan Lulu & Bayu",
-  "short_name": "Lulu & Bayu",
-  "description": "Undangan pernikahan Lulu Diyanti Putri & Bayu Wisnu Aji.",
-  "start_url": "/",
-  "scope": "/",
+  "name": "Admin Control - Undangan Digital",
+  "short_name": "Admin Undangan",
+  "description": "Aplikasi Admin Control Panel untuk pengelolaan & monitoring pesanan undangan digital.",
+  "start_url": "/admin",
+  "scope": "/admin",
   "display": "standalone",
-  "orientation": "portrait",
-  "background_color": "#f8f1e8",
-  "theme_color": "#8f6842",
+  "orientation": "any",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
   "icons": [
     {
       "src": "/asset/icon-192.png",

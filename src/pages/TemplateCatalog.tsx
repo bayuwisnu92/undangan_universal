@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TemplateRegistry } from '../templates/TemplateRegistry';
 
 export const TemplateCatalog: React.FC = () => {
   const navigate = useNavigate();
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const isDark = theme === 'dark';
   
   const demoSlugs: Record<number, string> = {
     1: 'lulu-bayu',
@@ -282,64 +284,80 @@ export const TemplateCatalog: React.FC = () => {
   };
 
   return (
-    <div className="app-page catalog-page" style={{
-      backgroundColor: '#0f172a',
-      color: '#f8fafc',
-      minHeight: '100vh',
-      fontFamily: 'Montserrat, sans-serif',
-      padding: '60px 20px'
-    }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto', textAlign: 'center' }}>
-        <h1 style={{
-          fontSize: 'clamp(2.2rem, 5vw, 3.5rem)',
-          fontWeight: 700,
-          background: 'linear-gradient(to right, #38bdf8, #a855f7, #f43f5e)',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent',
-          marginBottom: '15px'
-        }}>
-          Pilih Template Undangan Anda
-        </h1>
-        <p style={{
-          color: '#94a3b8',
-          fontSize: '1.1rem',
-          maxWidth: '700px',
-          margin: '0 auto 50px',
-          lineHeight: 1.6
-        }}>
-          Temukan koleksi desain undangan digital terbaik kami. Pilih desain favorit Anda dan buat undangan premium Anda secara instan.
-        </p>
+    <div className="app-page catalog-page" data-theme={theme}>
+      <div className="catalog-shell">
+        <div className="catalog-topbar">
+          <a className="catalog-brand" href="/templates" aria-label="Kembali ke katalog template">
+            <span className="catalog-brand-mark">U</span>
+            <span>Undangan Universal</span>
+          </a>
 
-        <div className="responsive-card-grid" style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
-          gap: '30px',
-          marginTop: '20px'
-        }}>
+          <div className="theme-toggle" aria-label="Pilih mode tampilan">
+            <button
+              type="button"
+              className={!isDark ? 'active' : ''}
+              onClick={() => setTheme('light')}
+            >
+              Light
+            </button>
+            <button
+              type="button"
+              className={isDark ? 'active' : ''}
+              onClick={() => setTheme('dark')}
+            >
+              Dark
+            </button>
+          </div>
+        </div>
+
+        <section className="catalog-hero">
+          <div className="catalog-hero-copy">
+            <span className="catalog-eyebrow">Koleksi template premium</span>
+            <h1>Pilih desain undangan yang paling terasa seperti hari bahagiamu.</h1>
+            <p>
+              Jelajahi template cerah, elegan, modern, sampai moody. Semua siap dipakai untuk demo,
+              checkout, dan personalisasi undangan digital.
+            </p>
+            <div className="catalog-hero-actions">
+              <a href="#template-list" className="catalog-primary-action">Lihat Template</a>
+              <span>{Object.keys(TemplateRegistry).length} desain tersedia</span>
+            </div>
+          </div>
+
+          <div className="catalog-hero-showcase" aria-hidden="true">
+            <div className="showcase-card showcase-main">
+              <span>Featured</span>
+              <strong>Royal Sage</strong>
+              <small>Nabila &amp; Fajar</small>
+            </div>
+            <div className="showcase-card showcase-accent">
+              <span>New</span>
+              <strong>Coastal Blue</strong>
+            </div>
+          </div>
+        </section>
+
+        <div className="catalog-section-heading" id="template-list">
+          <div>
+            <span className="catalog-eyebrow">Template undangan</span>
+            <h2>Siap dipilih dan dicoba</h2>
+          </div>
+          <p>Default tampilan halaman ini light, dan mode dark tetap tersedia lewat toggle di atas.</p>
+        </div>
+
+        <div className="responsive-card-grid catalog-grid">
           {Object.values(TemplateRegistry).map((template) => {
             const demoSlug = demoSlugs[template.id] || 'lulu-bayu';
 
             return (
               <div 
                 key={template.id} 
-                style={{
-                  background: '#1e293b',
-                  borderRadius: '20px',
-                  overflow: 'hidden',
-                  border: '1px solid rgba(255,255,255,0.05)',
-                  boxShadow: '0 10px 30px rgba(0,0,0,0.2)',
-                  transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-                  textAlign: 'left',
-                  display: 'flex',
-                  flexDirection: 'column'
-                }}
+                className="catalog-card"
                 onMouseEnter={(e) => {
                   e.currentTarget.style.transform = 'translateY(-8px)';
-                  e.currentTarget.style.boxShadow = '0 25px 50px rgba(168,85,247,0.2)';
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = '0 10px 30px rgba(0,0,0,0.2)';
                 }}
               >
                 {/* Template Hero Preview */}
@@ -368,53 +386,24 @@ export const TemplateCatalog: React.FC = () => {
                 </div>
 
                 {/* Content */}
-                <div style={{ padding: '25px', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
-                  <h3 style={{ fontSize: '1.25rem', fontWeight: 600, marginBottom: '10px', color: '#f8fafc' }}>
-                    {template.name}
-                  </h3>
-                  <p style={{ color: '#94a3b8', fontSize: '0.9rem', lineHeight: 1.5, marginBottom: '25px', flexGrow: 1 }}>
+                <div className="catalog-card-content">
+                  <h3>{template.name}</h3>
+                  <p>
                     Layout modern dengan penyesuaian warna harmonis, typography responsif, dan ornamen mewah untuk menyambut tamu Anda.
                   </p>
 
-                  <div className="catalog-actions" style={{ display: 'flex', gap: '12px' }}>
+                  <div className="catalog-actions">
                     <a
                       href={`/${demoSlug}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      style={{
-                        flex: 1,
-                        padding: '12px 18px',
-                        backgroundColor: '#a855f7',
-                        color: 'white',
-                        textAlign: 'center',
-                        textDecoration: 'none',
-                        fontWeight: 600,
-                        fontSize: '0.9rem',
-                        borderRadius: '12px',
-                        boxShadow: '0 4px 12px rgba(168,85,247,0.3)',
-                        transition: 'opacity 0.2s'
-                      }}
-                      onMouseEnter={(e) => e.currentTarget.style.opacity = '0.9'}
-                      onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}
+                      className="catalog-btn catalog-btn-primary"
                     >
                       Demo Live
                     </a>
                     <button
                       onClick={() => navigate(`/buy/${template.id}`)}
-                      style={{
-                        flex: 1,
-                        padding: '12px 18px',
-                        backgroundColor: 'transparent',
-                        color: '#f8fafc',
-                        border: '1.5px solid rgba(255,255,255,0.15)',
-                        fontWeight: 600,
-                        fontSize: '0.9rem',
-                        borderRadius: '12px',
-                        cursor: 'pointer',
-                        transition: 'border-color 0.2s'
-                      }}
-                      onMouseEnter={(e) => e.currentTarget.style.borderColor = 'white'}
-                      onMouseLeave={(e) => e.currentTarget.style.borderColor = 'rgba(255,255,255,0.15)'}
+                      className="catalog-btn catalog-btn-secondary"
                     >
                       Pilih Desain
                     </button>

@@ -1,6 +1,42 @@
 import { supabaseClient } from './supabaseClient';
 import type { WeddingData } from '../types/wedding';
 
+export const PACKAGE_OPTIONS = [
+  {
+    id: '2-weeks',
+    name: 'Aktif 2 Minggu',
+    durationDays: 14,
+    price: 'Rp49.000',
+    description: 'Cocok untuk undangan cepat dan acara intimate.'
+  },
+  {
+    id: '1-month',
+    name: 'Aktif 1 Bulan',
+    durationDays: 30,
+    price: 'Rp79.000',
+    description: 'Pilihan aman untuk masa sebar undangan standar.'
+  },
+  {
+    id: '3-months',
+    name: 'Aktif 3 Bulan',
+    durationDays: 90,
+    price: 'Rp129.000',
+    description: 'Lebih lega untuk persiapan, sebar link, dan dokumentasi.'
+  }
+] as const;
+
+export type PackageOption = typeof PACKAGE_OPTIONS[number];
+
+export function getPackageById(packageId: string): PackageOption {
+  return PACKAGE_OPTIONS.find((item) => item.id === packageId) || PACKAGE_OPTIONS[1];
+}
+
+export function calculateActiveUntil(durationDays: number, startDate = new Date()): string {
+  const activeUntil = new Date(startDate);
+  activeUntil.setDate(activeUntil.getDate() + durationDays);
+  return activeUntil.toISOString();
+}
+
 // Mock data fallback khusus untuk menjamin Live Demo selalu berfungsi
 export const mockWeddings: Record<string, WeddingData> = {
   'lulu-bayu': {
@@ -245,6 +281,67 @@ export const mockWeddings: Record<string, WeddingData> = {
   }
 };
 
+const additionalTemplateDemos: Array<{
+  slug: string;
+  templateId: number;
+  bride: string;
+  groom: string;
+  date: string;
+  dateText: string;
+  place: string;
+  buyer: string;
+}> = [
+  { slug: 'aisha-hasan', templateId: 9, bride: 'Aisha', groom: 'Hasan', date: '2027-05-09T08:00:00+07:00', dateText: 'Ahad, 9 Mei 2027', place: 'Masjid Agung Trans Studio Bandung', buyer: 'Hasan Alfarizi' },
+  { slug: 'zahra-umar', templateId: 10, bride: 'Zahra', groom: 'Umar', date: '2027-06-19T09:00:00+07:00', dateText: 'Sabtu, 19 Juni 2027', place: 'Masjid Raya Al-Jabbar', buyer: 'Umar Hakim' },
+  { slug: 'fatimah-ali', templateId: 11, bride: 'Fatimah', groom: 'Ali', date: '2027-07-04T08:00:00+07:00', dateText: 'Ahad, 4 Juli 2027', place: 'Islamic Center Bandung', buyer: 'Ali Rahman' },
+  { slug: 'sarah-ibrahim', templateId: 12, bride: 'Sarah', groom: 'Ibrahim', date: '2027-08-21T08:30:00+07:00', dateText: 'Sabtu, 21 Agustus 2027', place: 'Gedung Serbaguna Daarut Tauhiid', buyer: 'Ibrahim Fikri' },
+  { slug: 'hana-yusuf', templateId: 13, bride: 'Hana', groom: 'Yusuf', date: '2027-09-18T09:00:00+07:00', dateText: 'Sabtu, 18 September 2027', place: 'Masjid Pusdai Jawa Barat', buyer: 'Yusuf Hamdan' },
+  { slug: 'ratih-arya', templateId: 14, bride: 'Ratih', groom: 'Arya', date: '2027-10-10T08:00:00+07:00', dateText: 'Ahad, 10 Oktober 2027', place: 'Pendopo Agung Royal Ambarrukmo', buyer: 'Arya Pradana' },
+  { slug: 'dewi-agus', templateId: 15, bride: 'Dewi', groom: 'Agus', date: '2027-11-12T08:00:00+07:00', dateText: 'Jumat, 12 November 2027', place: 'Saung Angklung Udjo', buyer: 'Agus Gumilar' },
+  { slug: 'putri-rangga', templateId: 16, bride: 'Putri', groom: 'Rangga', date: '2027-12-04T09:00:00+07:00', dateText: 'Sabtu, 4 Desember 2027', place: 'Balairung Sari Minang', buyer: 'Rangga Putra' },
+  { slug: 'roma-togar', templateId: 17, bride: 'Roma', groom: 'Togar', date: '2028-01-15T08:00:00+07:00', dateText: 'Sabtu, 15 Januari 2028', place: 'Sopo Godang HKBP Bandung', buyer: 'Togar Siregar' },
+  { slug: 'aisyah-andika', templateId: 18, bride: 'Aisyah', groom: 'Andika', date: '2028-02-20T09:00:00+07:00', dateText: 'Ahad, 20 Februari 2028', place: 'Gedung Phinisi Convention Makassar', buyer: 'Andika Pratama' }
+];
+
+Object.assign(
+  mockWeddings,
+  Object.fromEntries(
+    additionalTemplateDemos.map((demo) => [
+      demo.slug,
+      {
+        id: String(demo.templateId),
+        slug: demo.slug,
+        template_id: demo.templateId,
+        payment_status: 'paid',
+        is_configured: true,
+        buyer_name: demo.buyer,
+        buyer_email: `${demo.slug}@example.com`,
+        bride_name: demo.bride,
+        bride_fullname: `${demo.bride} Permata`,
+        bride_parents: 'Bapak Ahmad & Ibu Aminah',
+        groom_name: demo.groom,
+        groom_fullname: `${demo.groom} Pratama`,
+        groom_parents: 'Bapak Hendra & Ibu Salma',
+        event_date: demo.date,
+        akad_date_text: demo.dateText,
+        akad_time_text: '08.00 WIB - Selesai',
+        akad_location: demo.place,
+        akad_address: 'Bandung, Jawa Barat',
+        resepsi_date_text: demo.dateText,
+        resepsi_time_text: '11.00 WIB - 14.00 WIB',
+        resepsi_location: demo.place,
+        resepsi_address: 'Bandung, Jawa Barat',
+        maps_url: 'https://maps.app.goo.gl/abeHsbATGtEhxFf26',
+        maps_iframe_url: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15842.40926540292!2d107.58919485541989!3d-6.938040799999994!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68e63a66953993%3A0x248047e0057191ae!2sPT.%20Inti%20(Persero)!5e0!3m2!1sid!2sid!4v1781082382014!5m2!1sid!2sid',
+        music_url: 'asset/spike.mp3',
+        cover_bg_image: 'bg-wedding.png',
+        bg_image: 'background.png',
+        gallery_images: ['bg-wedding.png', 'background.png']
+      } satisfies WeddingData
+    ])
+  )
+);
+
 // Fetch single wedding by slug from Supabase (with Mock Fallback for Demo slugs)
 export async function getWeddingBySlug(slug: string): Promise<WeddingData> {
   try {
@@ -325,8 +422,10 @@ export async function createWeddingOrder(
   slug: string, 
   templateId: number, 
   buyerName: string, 
-  buyerEmail: string
+  buyerEmail: string,
+  packageId: string
 ): Promise<WeddingData> {
+  const selectedPackage = getPackageById(packageId);
   const newWedding = {
     slug: slug.toLowerCase().replace(/[^a-z0-9-]/g, ''),
     template_id: templateId,
@@ -334,6 +433,9 @@ export async function createWeddingOrder(
     is_configured: false,
     buyer_name: buyerName,
     buyer_email: buyerEmail,
+    package_name: selectedPackage.name,
+    package_duration_days: selectedPackage.durationDays,
+    active_until: null,
     music_url: 'asset/spike.mp3'
   };
 
@@ -366,9 +468,15 @@ export async function submitPaymentReceipt(id: string, receiptBase64: string): P
 
 // Admin confirms payment approval in Supabase
 export async function adminConfirmPayment(id: string): Promise<WeddingData> {
+  const existing = await getWeddingById(id);
+  const durationDays = existing.package_duration_days || 30;
+
   const { data, error } = await supabaseClient  
     .from('weddings')
-    .update({ payment_status: 'paid' })
+    .update({
+      payment_status: 'paid',
+      active_until: calculateActiveUntil(durationDays)
+    })
     .eq('id', id)
     .select()
     .single();
@@ -377,6 +485,18 @@ export async function adminConfirmPayment(id: string): Promise<WeddingData> {
     throw new Error(error?.message || "Gagal mengonfirmasi pembayaran");
   }
   return data as WeddingData;
+}
+
+// Admin deletes expired wedding invitation from Supabase
+export async function adminDeleteWedding(id: string): Promise<void> {
+  const { error } = await supabaseClient
+    .from('weddings')
+    .delete()
+    .eq('id', id);
+
+  if (error) {
+    throw new Error(error.message || 'Gagal menghapus undangan.');
+  }
 }
 
 // Complete onboarding details in Supabase

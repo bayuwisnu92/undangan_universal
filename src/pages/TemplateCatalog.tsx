@@ -15,7 +15,36 @@ export const TemplateCatalog: React.FC = () => {
     5: 'anton-mega',
     6: 'nabila-fajar',
     7: 'maya-dimas',
-    8: 'tara-rizky'
+    8: 'tara-rizky',
+    9: 'aisha-hasan',
+    10: 'zahra-umar',
+    11: 'fatimah-ali',
+    12: 'sarah-ibrahim',
+    13: 'hana-yusuf',
+    14: 'ratih-arya',
+    15: 'dewi-agus',
+    16: 'putri-rangga',
+    17: 'roma-togar',
+    18: 'aisyah-andika'
+  };
+
+  const culturalPreviews: Record<number, {
+    label: string;
+    names: string;
+    date: string;
+    colors: [string, string, string];
+    motif?: 'islamic' | 'jawa' | 'sunda' | 'padang' | 'batak' | 'bugis';
+  }> = {
+    9: { label: 'Noor Mosque', names: 'Aisha & Hasan', date: '09 MEI 2027', colors: ['#f8f3df', '#17745f', '#c9a44c'], motif: 'islamic' },
+    10: { label: 'Andalus Emerald', names: 'Zahra & Umar', date: '19 JUNI 2027', colors: ['#edf8f2', '#0f6b4f', '#d6ad4b'], motif: 'islamic' },
+    11: { label: 'Kaaba Gold', names: 'Fatimah & Ali', date: '04 JULI 2027', colors: ['#111111', '#d4af37', '#f4d77a'], motif: 'islamic' },
+    12: { label: 'Sakinah Ivory', names: 'Sarah & Ibrahim', date: '21 AGUSTUS 2027', colors: ['#fffaf0', '#9c6f45', '#c99a68'], motif: 'islamic' },
+    13: { label: 'Ottoman Blue', names: 'Hana & Yusuf', date: '18 SEPTEMBER 2027', colors: ['#eef3fb', '#1d4f8f', '#c79a3b'], motif: 'islamic' },
+    14: { label: 'Adat Jawa', names: 'Ratih & Arya', date: '10 OKTOBER 2027', colors: ['#fbf1df', '#7a3f22', '#b4813a'], motif: 'jawa' },
+    15: { label: 'Adat Sunda', names: 'Dewi & Agus', date: '12 NOVEMBER 2027', colors: ['#f1f8ed', '#466f3b', '#c9a34c'], motif: 'sunda' },
+    16: { label: 'Adat Padang', names: 'Putri & Rangga', date: '04 DESEMBER 2027', colors: ['#fff1e8', '#b31f2a', '#d7a33d'], motif: 'padang' },
+    17: { label: 'Adat Batak', names: 'Roma & Togar', date: '15 JANUARI 2028', colors: ['#fff5ed', '#a02d24', '#1d1d1d'], motif: 'batak' },
+    18: { label: 'Adat Bugis', names: 'Aisyah & Andika', date: '20 FEBRUARI 2028', colors: ['#f2f7fb', '#1f5c7a', '#c79a35'], motif: 'bugis' }
   };
 
   const renderCardPreview = (id: number) => {
@@ -279,6 +308,62 @@ export const TemplateCatalog: React.FC = () => {
         );
 
       default:
+        if (culturalPreviews[id]) {
+          const preview = culturalPreviews[id];
+          const [bg, primary, accent] = preview.colors;
+          const isDarkPreview = bg === '#111111';
+          const motifStyle: React.CSSProperties =
+            preview.motif === 'padang'
+              ? { clipPath: 'polygon(0 100%, 15% 32%, 30% 100%, 45% 18%, 60% 100%, 75% 18%, 90% 100%, 100% 32%, 100% 100%)' }
+              : preview.motif === 'batak'
+                ? { clipPath: 'none', height: '42px', background: `repeating-linear-gradient(90deg, ${primary} 0 24px, ${accent} 24px 36px, #fff 36px 48px)` }
+                : preview.motif === 'bugis'
+                  ? { clipPath: 'polygon(50% 0, 100% 35%, 82% 100%, 18% 100%, 0 35%)' }
+                  : preview.motif === 'sunda'
+                    ? { borderRadius: '70px 70px 10px 10px' }
+                    : preview.motif === 'jawa'
+                      ? { clipPath: 'polygon(0 100%, 16% 42%, 34% 100%, 50% 15%, 66% 100%, 84% 42%, 100% 100%)' }
+                      : { borderRadius: '50%' };
+
+          return (
+            <div style={{
+              ...cardStyle,
+              background: `
+                linear-gradient(135deg, ${primary}22 25%, transparent 25%) 0 0 / 32px 32px,
+                linear-gradient(225deg, ${primary}18 25%, transparent 25%) 0 0 / 32px 32px,
+                ${bg}
+              `,
+              color: isDarkPreview ? '#f7efd9' : primary,
+              borderBottom: `2px solid ${accent}`
+            }}>
+              <div style={{ position: 'absolute', inset: '18px', border: `1px solid ${accent}66` }} />
+              <div style={{
+                position: 'absolute',
+                top: '22px',
+                width: '150px',
+                height: '74px',
+                background: `linear-gradient(135deg, ${primary}, ${accent})`,
+                opacity: 0.22,
+                ...motifStyle
+              }} />
+              <div style={{ background: isDarkPreview ? 'rgba(26,26,26,0.88)' : 'rgba(255,255,255,0.78)', border: `1px solid ${primary}33`, padding: '28px 18px', width: '100%', maxWidth: '282px', boxShadow: '0 18px 45px rgba(0,0,0,0.12)', zIndex: 1 }}>
+                <div style={{ color: primary, letterSpacing: '3px', textTransform: 'uppercase', fontSize: '0.62rem', fontWeight: 800 }}>{preview.label}</div>
+                <div style={{ color: primary, fontFamily: "'Cormorant Garamond', serif", fontSize: '2.75rem', lineHeight: 0.96, margin: '12px 0' }}>{preview.names}</div>
+                <div style={{ color: accent, letterSpacing: '2px', fontSize: '0.72rem' }}>{preview.date}</div>
+                <div style={{ display: 'flex', justifyContent: 'center', gap: '6px', marginTop: '16px' }}>
+                  {['300', '08', '45', '12'].map((val, i) => (
+                    <div key={i} style={{ minWidth: '40px', padding: '7px 7px', background: isDarkPreview ? '#1a1a1a' : '#fff', border: `1px solid ${primary}33` }}>
+                      <span style={{ display: 'block', color: primary, fontFamily: "'Cormorant Garamond', serif", fontSize: '1rem' }}>{val}</span>
+                      <small style={{ color: accent, fontSize: '0.43rem', textTransform: 'uppercase' }}>{['Hari', 'Jam', 'Mnt', 'Dtk'][i]}</small>
+                    </div>
+                  ))}
+                </div>
+                <div style={{ marginTop: '16px', padding: '10px 22px', background: `linear-gradient(135deg, ${primary}, ${accent})`, color: '#fff', fontSize: '0.65rem', letterSpacing: '2px', textTransform: 'uppercase' }}>Buka Undangan</div>
+              </div>
+            </div>
+          );
+        }
+
         return <div style={{ height: '380px', background: '#1e293b' }} />;
     }
   };

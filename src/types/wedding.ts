@@ -9,6 +9,9 @@ export interface WeddingData {
   buyer_name?: string;
   buyer_email?: string;
   receipt_url?: string;
+  package_name?: string;
+  package_duration_days?: number;
+  active_until?: string;
   
   // Mempelai Wanita
   bride_name?: string;

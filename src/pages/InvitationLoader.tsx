@@ -41,6 +41,28 @@ export const InvitationLoader: React.FC = () => {
     if (wedding.payment_status !== 'paid') {
       return <Navigate to={`/payment-pending/${wedding.id}`} replace />;
     }
+    if (wedding.active_until && new Date(wedding.active_until).getTime() < Date.now()) {
+      return (
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '100vh',
+          backgroundColor: '#1A2744',
+          color: 'white',
+          fontFamily: 'sans-serif',
+          padding: '20px',
+          textAlign: 'center'
+        }}>
+          <h2>Masa Aktif Undangan Berakhir</h2>
+          <p style={{ opacity: 0.8, margin: '15px 0', maxWidth: '520px' }}>
+            Undangan ini sudah melewati masa aktif paket. Silakan hubungi admin untuk memperpanjang atau mengaktifkan kembali.
+          </p>
+          <a href="/templates" style={{ color: '#E8C97E', textDecoration: 'underline' }}>Lihat Template Undangan</a>
+        </div>
+      );
+    }
     if (!wedding.is_configured) {
       return <Navigate to={`/setup-wedding/${wedding.id}`} replace />;
     }

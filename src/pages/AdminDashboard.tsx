@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getAllWeddings, adminConfirmPayment } from '../services/weddingService';
+import { getAllWeddings, adminConfirmPayment, adminDeleteWedding } from '../services/weddingService';
 import type { WeddingData } from '../types/wedding';
 import { LoadingScreen } from '../components/LoadingScreen';
 
@@ -67,6 +67,70 @@ export const AdminDashboard: React.FC = () => {
     } catch (e) {
       console.error(e);
       alert('Gagal menyetujui pembayaran.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getActiveInfo = (wedding: WeddingData) => {
+    if (wedding.payment_status !== 'paid') {
+      return {
+        label: 'Belum aktif',
+        detail: wedding.package_name || 'Paket belum dipilih',
+        expired: false
+      };
+    }
+
+    if (!wedding.active_until) {
+      return {
+        label: 'Aktif belum diset',
+        detail: wedding.package_name || 'Durasi tidak tersedia',
+        expired: false
+      };
+    }
+
+    const activeUntil = new Date(wedding.active_until);
+    const now = new Date();
+    const diffDays = Math.ceil((activeUntil.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
+    const formatted = activeUntil.toLocaleDateString('id-ID', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric'
+    });
+
+    if (diffDays < 0) {
+      return {
+        label: 'Expired',
+        detail: `Berakhir ${formatted}`,
+        expired: true
+      };
+    }
+
+    return {
+      label: `${diffDays} hari lagi`,
+      detail: `Aktif sampai ${formatted}`,
+      expired: false
+    };
+  };
+
+  const handleDeleteExpired = async (wedding: WeddingData) => {
+    const activeInfo = getActiveInfo(wedding);
+    if (!activeInfo.expired) {
+      alert('Undangan ini belum melewati masa aktif.');
+      return;
+    }
+
+    const confirmed = window.confirm(`Hapus undangan /${wedding.slug}? Data undangan dan ucapan terkait akan ikut terhapus.`);
+    if (!confirmed) return;
+
+    try {
+      setLoading(true);
+      await adminDeleteWedding(wedding.id);
+      alert('Undangan expired berhasil dihapus.');
+      await fetchWeddings();
+    } catch (e) {
+      console.error(e);
+      alert('Gagal menghapus undangan.');
     } finally {
       setLoading(false);
     }
@@ -284,12 +348,16 @@ export const AdminDashboard: React.FC = () => {
                     <th style={{ padding: '16px 20px', color: '#cbd5e1', fontSize: '0.85rem', fontWeight: 600 }}>Buyer Info</th>
                     <th style={{ padding: '16px 20px', color: '#cbd5e1', fontSize: '0.85rem', fontWeight: 600 }}>Slug &amp; Template ID</th>
                     <th style={{ padding: '16px 20px', color: '#cbd5e1', fontSize: '0.85rem', fontWeight: 600 }}>Status</th>
+                    <th style={{ padding: '16px 20px', color: '#cbd5e1', fontSize: '0.85rem', fontWeight: 600 }}>Paket &amp; Masa Aktif</th>
                     <th style={{ padding: '16px 20px', color: '#cbd5e1', fontSize: '0.85rem', fontWeight: 600 }}>Bukti Bayar</th>
                     <th style={{ padding: '16px 20px', color: '#cbd5e1', fontSize: '0.85rem', fontWeight: 600 }}>Aksi</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredWeddings.map((w) => (
+                  {filteredWeddings.map((w) => {
+                    const activeInfo = getActiveInfo(w);
+
+                    return (
                     <tr key={w.id} style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
                       <td style={{ padding: '18px 20px' }}>
                         <strong style={{ display: 'block', color: 'white' }}>{w.buyer_name || 'Tanpa Nama'}</strong>
@@ -312,6 +380,26 @@ export const AdminDashboard: React.FC = () => {
                         </span>
                         <span style={{ display: 'block', fontSize: '0.75rem', color: '#94a3b8', marginTop: '5px' }}>
                           {w.is_configured ? 'Data Diisi' : 'Belum Konfigurasi'}
+                        </span>
+                      </td>
+                      <td style={{ padding: '18px 20px' }}>
+                        <strong style={{ display: 'block', color: 'white', fontSize: '0.88rem' }}>
+                          {w.package_name || `${w.package_duration_days || 30} hari`}
+                        </strong>
+                        <span style={{
+                          display: 'inline-block',
+                          marginTop: '7px',
+                          padding: '4px 10px',
+                          borderRadius: '20px',
+                          fontSize: '0.75rem',
+                          fontWeight: 700,
+                          backgroundColor: activeInfo.expired ? 'rgba(239, 68, 68, 0.15)' : 'rgba(34, 197, 94, 0.15)',
+                          color: activeInfo.expired ? '#fca5a5' : '#4ade80'
+                        }}>
+                          {activeInfo.label}
+                        </span>
+                        <span style={{ display: 'block', fontSize: '0.75rem', color: '#94a3b8', marginTop: '5px' }}>
+                          {activeInfo.detail}
                         </span>
                       </td>
                       <td style={{ padding: '18px 20px' }}>
@@ -353,25 +441,45 @@ export const AdminDashboard: React.FC = () => {
                           </button>
                         )}
                         {w.payment_status === 'paid' && (
-                          <a
-                            href={`/setup-wedding/${w.id}`}
-                            style={{
-                              padding: '8px 14px',
-                              backgroundColor: '#0284c7',
-                              color: 'white',
-                              borderRadius: '8px',
-                              textDecoration: 'none',
-                              fontSize: '0.8rem',
-                              fontWeight: 600,
-                              display: 'inline-block'
-                            }}
-                          >
-                            Edit Data
-                          </a>
+                          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                            <a
+                              href={`/setup-wedding/${w.id}`}
+                              style={{
+                                padding: '8px 14px',
+                                backgroundColor: '#0284c7',
+                                color: 'white',
+                                borderRadius: '8px',
+                                textDecoration: 'none',
+                                fontSize: '0.8rem',
+                                fontWeight: 600,
+                                display: 'inline-block'
+                              }}
+                            >
+                              Edit Data
+                            </a>
+                            {activeInfo.expired && (
+                              <button
+                                onClick={() => handleDeleteExpired(w)}
+                                style={{
+                                  padding: '8px 14px',
+                                  backgroundColor: '#dc2626',
+                                  color: 'white',
+                                  border: 'none',
+                                  borderRadius: '8px',
+                                  fontWeight: 600,
+                                  fontSize: '0.8rem',
+                                  cursor: 'pointer'
+                                }}
+                              >
+                                Hapus Expired
+                              </button>
+                            )}
+                          </div>
                         )}
                       </td>
                     </tr>
-                  ))}
+                    );
+                  })}
                 </tbody>
               </table>
             </div>

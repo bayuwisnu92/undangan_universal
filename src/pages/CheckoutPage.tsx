@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getTemplateById } from '../templates/TemplateRegistry';
-import { createWeddingOrder } from '../services/weddingService';
+import { createWeddingOrder, PACKAGE_OPTIONS } from '../services/weddingService';
 
 export const CheckoutPage: React.FC = () => {
   const { templateId } = useParams<{ templateId: string }>();
@@ -12,6 +12,7 @@ export const CheckoutPage: React.FC = () => {
   const [buyerName, setBuyerName] = useState('');
   const [buyerEmail, setBuyerEmail] = useState('');
   const [slug, setSlug] = useState('');
+  const [packageId, setPackageId] = useState('1-month');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -32,7 +33,7 @@ export const CheckoutPage: React.FC = () => {
     try {
       setLoading(true);
       setError(null);
-      const data = await createWeddingOrder(cleanSlug, templateNum, buyerName, buyerEmail);
+      const data = await createWeddingOrder(cleanSlug, templateNum, buyerName, buyerEmail, packageId);
       // Redirect to simulated payment page
       navigate(`/payment-pending/${data.id}`);
     } catch (err: any) {
@@ -154,6 +155,39 @@ export const CheckoutPage: React.FC = () => {
             </div>
             <small style={{ color: '#64748b', fontSize: '0.78rem', marginTop: '2px' }}>
               Hanya huruf kecil, angka, dan tanda hubung (-).
+            </small>
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            <label style={{ fontSize: '0.85rem', fontWeight: 600, color: '#cbd5e1' }}>Pilih Masa Aktif Undangan</label>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(145px, 1fr))', gap: '10px' }}>
+              {PACKAGE_OPTIONS.map((pkg) => {
+                const active = packageId === pkg.id;
+
+                return (
+                  <button
+                    key={pkg.id}
+                    type="button"
+                    onClick={() => setPackageId(pkg.id)}
+                    style={{
+                      textAlign: 'left',
+                      padding: '14px',
+                      borderRadius: '14px',
+                      border: active ? '1.5px solid #a855f7' : '1px solid rgba(255,255,255,0.1)',
+                      background: active ? 'rgba(168,85,247,0.16)' : '#0f172a',
+                      color: 'white',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    <strong style={{ display: 'block', fontSize: '0.92rem', marginBottom: '5px' }}>{pkg.name}</strong>
+                    <span style={{ display: 'block', color: '#c084fc', fontWeight: 700, marginBottom: '6px' }}>{pkg.price}</span>
+                    <small style={{ color: '#94a3b8', lineHeight: 1.5 }}>{pkg.description}</small>
+                  </button>
+                );
+              })}
+            </div>
+            <small style={{ color: '#64748b', fontSize: '0.78rem' }}>
+              Masa aktif mulai dihitung setelah admin mengonfirmasi pembayaran.
             </small>
           </div>
 

@@ -10,6 +10,7 @@ const TemplateDark = React.lazy(() => import('./TemplateDark/TemplateDark'));
 const TemplateRoyalSage = React.lazy(() => import('./TemplateRoyalSage/TemplateRoyalSage'));
 const TemplateRusticWarm = React.lazy(() => import('./TemplateRusticWarm/TemplateRusticWarm'));
 const TemplateCoastalBlue = React.lazy(() => import('./TemplateCoastalBlue/TemplateCoastalBlue'));
+const TemplateCulturalCollection = React.lazy(() => import('./TemplateCulturalCollection/TemplateCulturalCollection'));
 
 export interface TemplateDefinition {
   id: number;
@@ -57,6 +58,56 @@ export const TemplateRegistry: Record<number, TemplateDefinition> = {
     id: 8,
     name: 'Coastal Blue',
     component: TemplateCoastalBlue
+  },
+  9: {
+    id: 9,
+    name: 'Islami Noor Mosque',
+    component: TemplateCulturalCollection
+  },
+  10: {
+    id: 10,
+    name: 'Islami Andalus Emerald',
+    component: TemplateCulturalCollection
+  },
+  11: {
+    id: 11,
+    name: 'Islami Kaaba Gold',
+    component: TemplateCulturalCollection
+  },
+  12: {
+    id: 12,
+    name: 'Islami Sakinah Ivory',
+    component: TemplateCulturalCollection
+  },
+  13: {
+    id: 13,
+    name: 'Islami Ottoman Blue',
+    component: TemplateCulturalCollection
+  },
+  14: {
+    id: 14,
+    name: 'Adat Jawa Klasik',
+    component: TemplateCulturalCollection
+  },
+  15: {
+    id: 15,
+    name: 'Adat Sunda Asri',
+    component: TemplateCulturalCollection
+  },
+  16: {
+    id: 16,
+    name: 'Adat Padang Minang',
+    component: TemplateCulturalCollection
+  },
+  17: {
+    id: 17,
+    name: 'Adat Batak Ulos',
+    component: TemplateCulturalCollection
+  },
+  18: {
+    id: 18,
+    name: 'Adat Bugis Elegan',
+    component: TemplateCulturalCollection
   }
 };
 

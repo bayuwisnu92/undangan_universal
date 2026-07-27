@@ -7,6 +7,9 @@ const TemplateMinimal = React.lazy(() => import('./TemplateMinimal/TemplateMinim
 const TemplateGlass = React.lazy(() => import('./TemplateGlass/TemplateGlass'));
 const TemplateFloral = React.lazy(() => import('./TemplateFloral/TemplateFloral'));
 const TemplateDark = React.lazy(() => import('./TemplateDark/TemplateDark'));
+const TemplateRoyalSage = React.lazy(() => import('./TemplateRoyalSage/TemplateRoyalSage'));
+const TemplateRusticWarm = React.lazy(() => import('./TemplateRusticWarm/TemplateRusticWarm'));
+const TemplateCoastalBlue = React.lazy(() => import('./TemplateCoastalBlue/TemplateCoastalBlue'));
 
 export interface TemplateDefinition {
   id: number;
@@ -39,6 +42,21 @@ export const TemplateRegistry: Record<number, TemplateDefinition> = {
     id: 5,
     name: 'Dark Elegant',
     component: TemplateDark
+  },
+  6: {
+    id: 6,
+    name: 'Royal Sage',
+    component: TemplateRoyalSage
+  },
+  7: {
+    id: 7,
+    name: 'Rustic Warm',
+    component: TemplateRusticWarm
+  },
+  8: {
+    id: 8,
+    name: 'Coastal Blue',
+    component: TemplateCoastalBlue
   }
 };
 

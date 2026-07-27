@@ -25,12 +25,12 @@ export const SetupWeddingPage: React.FC = () => {
   const [eventDate, setEventDate] = useState('2026-08-16T08:00');
   
   const [akadDateText, setAkadDateText] = useState('Ahad, 16 Agustus 2026');
-  const [akadTimeText, setAkadTimeText] = useState('08.00 WIB – Selesai');
+  const [akadTimeText, setAkadTimeText] = useState('08.00 WIB - Selesai');
   const [akadLocation, setAkadLocation] = useState('Gedung PT INTI');
   const [akadAddress, setAkadAddress] = useState('Jl. Moh. Toha No.77, Bandung');
   
   const [resepsiDateText, setResepsiDateText] = useState('Ahad, 16 Agustus 2026');
-  const [resepsiTimeText, setResepsiTimeText] = useState('11.00 WIB – 14.00 WIB');
+  const [resepsiTimeText, setResepsiTimeText] = useState('11.00 WIB - 14.00 WIB');
   const [resepsiLocation, setResepsiLocation] = useState('Gedung PT INTI');
   const [resepsiAddress, setResepsiAddress] = useState('Jl. Moh. Toha No.77, Bandung');
   
@@ -70,12 +70,12 @@ const [uploadingPrewed, setUploadingPrewed] = useState(false);
         }
         
         setAkadDateText(data.akad_date_text || 'Ahad, 16 Agustus 2026');
-        setAkadTimeText(data.akad_time_text || '08.00 WIB – Selesai');
+        setAkadTimeText(data.akad_time_text || '08.00 WIB - Selesai');
         setAkadLocation(data.akad_location || 'Gedung PT INTI');
         setAkadAddress(data.akad_address || 'Jl. Moh. Toha No.77, Bandung');
         
         setResepsiDateText(data.resepsi_date_text || 'Ahad, 16 Agustus 2026');
-        setResepsiTimeText(data.resepsi_time_text || '11.00 WIB – 14.00 WIB');
+        setResepsiTimeText(data.resepsi_time_text || '11.00 WIB - 14.00 WIB');
         setResepsiLocation(data.resepsi_location || 'Gedung PT INTI');
         setResepsiAddress(data.resepsi_address || 'Jl. Moh. Toha No.77, Bandung');
         
@@ -144,6 +144,16 @@ const handleCoverChange = async (
 
     if (!file) return;
 
+    if (!file.type.startsWith("image/")) {
+        alert("File cover harus berupa gambar.");
+        return;
+    }
+
+    if (file.size > 2 * 1024 * 1024) {
+        alert("Ukuran cover maksimal 2MB agar undangan tetap cepat dibuka di HP.");
+        return;
+    }
+
     setCoverFile(file);
 
     setCoverPreview(URL.createObjectURL(file));
@@ -185,6 +195,16 @@ const handlePrewedChange = async (
 ) => {
     const file = e.target.files?.[0];
     if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+        alert("File prewedding harus berupa gambar.");
+        return;
+    }
+
+    if (file.size > 2 * 1024 * 1024) {
+        alert("Ukuran foto prewedding maksimal 2MB agar undangan tetap ringan.");
+        return;
+    }
 
     setPrewedFile(file);
     setPrewedPreview(URL.createObjectURL(file));
@@ -290,29 +310,31 @@ const handlePrewedChange = async (
   }
 
   return (
-    <div style={{
+    <div className="app-page setup-page" style={{
       backgroundColor: '#0f172a',
       color: '#f8fafc',
       minHeight: '100vh',
       fontFamily: 'Montserrat, sans-serif',
       padding: '50px 20px'
     }}>
-      <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-        <h1 style={{ fontSize: '2.2rem', fontWeight: 700, marginBottom: '8px' }}>Pengaturan Data Undangan</h1>
+      <div className="setup-shell">
+        <div className="setup-main">
+        <h1 className="setup-title" style={{ fontSize: '2.2rem', fontWeight: 700, marginBottom: '8px' }}>Pengaturan Data Undangan</h1>
         <p style={{ color: '#94a3b8', fontSize: '0.95rem', marginBottom: '40px' }}>
           Silakan isi formulir di bawah dengan data pernikahan Anda. Klik "Simpan &amp; Publish" untuk melihat perubahan.
         </p>
 
-        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
+        <form className="setup-form" onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
           
           {/* URL & SLUG */}
-          <div style={{ background: '#1e293b', padding: '30px', borderRadius: '20px', border: '1px solid rgba(255,255,255,0.05)' }}>
+          <div className="setup-section" style={{ background: '#1e293b', padding: '30px', borderRadius: '20px', border: '1px solid rgba(255,255,255,0.05)' }}>
             <h3 style={{ borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: '12px', marginBottom: '20px', color: '#a855f7' }}>URL Undangan</h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               <label style={{ fontSize: '0.85rem', fontWeight: 600 }}>Slug URL Pasangan</label>
               <div style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
-                <span style={{ position: 'absolute', left: '15px', color: '#64748b' }}>wedding.com/</span>
+                <span className="slug-prefix" style={{ position: 'absolute', left: '15px', color: '#64748b' }}>wedding.com/</span>
                 <input
+                  className="slug-input"
                   type="text"
                   value={slug}
                   onChange={(e) => setSlug(e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ''))}
@@ -332,7 +354,7 @@ const handlePrewedChange = async (
           </div>
 
           {/* MEMPELAI WANITA */}
-          <div style={{ background: '#1e293b', padding: '30px', borderRadius: '20px', border: '1px solid rgba(255,255,255,0.05)' }}>
+          <div className="setup-section" style={{ background: '#1e293b', padding: '30px', borderRadius: '20px', border: '1px solid rgba(255,255,255,0.05)' }}>
             <h3 style={{ borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: '12px', marginBottom: '20px', color: '#ec4899' }}>Mempelai Wanita (Bride)</h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
@@ -372,7 +394,7 @@ const handlePrewedChange = async (
           </div>
 
           {/* MEMPELAI PRIA */}
-          <div style={{ background: '#1e293b', padding: '30px', borderRadius: '20px', border: '1px solid rgba(255,255,255,0.05)' }}>
+          <div className="setup-section" style={{ background: '#1e293b', padding: '30px', borderRadius: '20px', border: '1px solid rgba(255,255,255,0.05)' }}>
             <h3 style={{ borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: '12px', marginBottom: '20px', color: '#3b82f6' }}>Mempelai Pria (Groom)</h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
@@ -412,7 +434,7 @@ const handlePrewedChange = async (
           </div>
 
           {/* DETAIL EVENT & WAKTU */}
-          <div style={{ background: '#1e293b', padding: '30px', borderRadius: '20px', border: '1px solid rgba(255,255,255,0.05)' }}>
+          <div className="setup-section" style={{ background: '#1e293b', padding: '30px', borderRadius: '20px', border: '1px solid rgba(255,255,255,0.05)' }}>
             <h3 style={{ borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: '12px', marginBottom: '20px', color: '#10b981' }}>Waktu &amp; Lokasi Acara</h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
@@ -426,7 +448,7 @@ const handlePrewedChange = async (
                 />
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px' }}>
+              <div className="setup-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
                   <label style={{ fontSize: '0.85rem' }}>Akad: Label Tanggal</label>
                   <input
@@ -443,13 +465,13 @@ const handlePrewedChange = async (
                     type="text"
                     value={akadTimeText}
                     onChange={(e) => setAkadTimeText(e.target.value)}
-                    placeholder="08.00 WIB – Selesai"
+                    placeholder="08.00 WIB - Selesai"
                     style={{ padding: '12px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)', backgroundColor: '#0f172a', color: 'white' }}
                   />
                 </div>
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px' }}>
+              <div className="setup-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
                   <label style={{ fontSize: '0.85rem' }}>Akad: Gedung/Lokasi</label>
                   <input
@@ -474,7 +496,7 @@ const handlePrewedChange = async (
 
               <hr style={{ border: 'none', borderTop: '1px solid rgba(255,255,255,0.08)', margin: '10px 0' }} />
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px' }}>
+              <div className="setup-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
                   <label style={{ fontSize: '0.85rem' }}>Resepsi: Label Tanggal</label>
                   <input
@@ -491,13 +513,13 @@ const handlePrewedChange = async (
                     type="text"
                     value={resepsiTimeText}
                     onChange={(e) => setResepsiTimeText(e.target.value)}
-                    placeholder="11.00 WIB – 14.00 WIB"
+                    placeholder="11.00 WIB - 14.00 WIB"
                     style={{ padding: '12px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)', backgroundColor: '#0f172a', color: 'white' }}
                   />
                 </div>
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px' }}>
+              <div className="setup-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
                   <label style={{ fontSize: '0.85rem' }}>Resepsi: Gedung/Lokasi</label>
                   <input
@@ -523,7 +545,7 @@ const handlePrewedChange = async (
           </div>
 
           {/* MAPS & MUSIC */}
-          <div style={{ background: '#1e293b', padding: '30px', borderRadius: '20px', border: '1px solid rgba(255,255,255,0.05)' }}>
+          <div className="setup-section" style={{ background: '#1e293b', padding: '30px', borderRadius: '20px', border: '1px solid rgba(255,255,255,0.05)' }}>
             <h3 style={{ borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: '12px', marginBottom: '20px', color: '#f59e0b' }}>Integrasi Maps &amp; Musik</h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
@@ -562,18 +584,20 @@ const handlePrewedChange = async (
             </div>
           </div>
           {/* UPLOAD FOTO */}
-          <div style={{ background: '#1e293b', padding: '30px', borderRadius: '20px', border: '1px solid rgba(255,255,255,0.05)' }}>
-            <h3 style={{ borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: '12px', marginBottom: '24px', color: '#f59e0b' }}>📸 Upload Foto</h3>
+          <div className="setup-section" style={{ background: '#1e293b', padding: '30px', borderRadius: '20px', border: '1px solid rgba(255,255,255,0.05)' }}>
+            <h3 style={{ borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: '12px', marginBottom: '24px', color: '#f59e0b' }}>Upload Foto</h3>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
+            <div className="setup-upload-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
 
               {/* Cover Background (for hero & OG image) */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                <label style={{ fontSize: '0.9rem', fontWeight: 600, color: '#a855f7' }}>🖼️ Cover / Background Undangan</label>
+                <label style={{ fontSize: '0.9rem', fontWeight: 600, color: '#a855f7' }}>Cover / Background Undangan</label>
                 <p style={{ fontSize: '0.75rem', color: '#94a3b8', margin: 0 }}>Tampil sebagai hero utama & thumbnail link share WhatsApp</p>
                 {coverPreview && (
                   <img
                     src={coverPreview}
+                    loading="lazy"
+                    decoding="async"
                     style={{ width: '100%', height: '180px', borderRadius: '10px', objectFit: 'cover', border: '2px solid rgba(168,85,247,0.4)' }}
                     alt="Preview cover"
                   />
@@ -583,7 +607,7 @@ const handlePrewedChange = async (
                   gap: '8px', padding: '16px', borderRadius: '10px', border: '2px dashed rgba(168,85,247,0.4)',
                   cursor: 'pointer', backgroundColor: 'rgba(168,85,247,0.05)', transition: '0.2s'
                 }}>
-                  <span style={{ fontSize: '1.5rem' }}>🖼️</span>
+                  <span style={{ fontSize: '1.5rem' }}>Gambar</span>
                   <span style={{ fontSize: '0.8rem', color: '#94a3b8' }}>{uploadingCover ? 'Mengupload...' : 'Klik untuk pilih gambar'}</span>
                   <input type="file" accept="image/*" onChange={handleCoverChange} style={{ display: 'none' }} />
                 </label>
@@ -591,11 +615,13 @@ const handlePrewedChange = async (
 
               {/* Prewedding Photo (displayed in body section) */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                <label style={{ fontSize: '0.9rem', fontWeight: 600, color: '#22c55e' }}>📷 Foto Prewedding</label>
+                <label style={{ fontSize: '0.9rem', fontWeight: 600, color: '#22c55e' }}>Foto Prewedding</label>
                 <p style={{ fontSize: '0.75rem', color: '#94a3b8', margin: 0 }}>Tampil sebagai foto showcase setelah hero undangan</p>
                 {prewedPreview && (
                   <img
                     src={prewedPreview}
+                    loading="lazy"
+                    decoding="async"
                     style={{ width: '100%', height: '180px', borderRadius: '10px', objectFit: 'cover', border: '2px solid rgba(34,197,94,0.4)' }}
                     alt="Preview prewedding"
                   />
@@ -605,7 +631,7 @@ const handlePrewedChange = async (
                   gap: '8px', padding: '16px', borderRadius: '10px', border: '2px dashed rgba(34,197,94,0.4)',
                   cursor: 'pointer', backgroundColor: 'rgba(34,197,94,0.05)', transition: '0.2s'
                 }}>
-                  <span style={{ fontSize: '1.5rem' }}>📷</span>
+                  <span style={{ fontSize: '1.5rem' }}>Foto</span>
                   <span style={{ fontSize: '0.8rem', color: '#94a3b8' }}>{uploadingPrewed ? 'Mengupload...' : 'Klik untuk pilih gambar'}</span>
                   <input type="file" accept="image/*" onChange={handlePrewedChange} style={{ display: 'none' }} />
                 </label>
@@ -633,6 +659,31 @@ const handlePrewedChange = async (
             Simpan &amp; Publish Website Undangan
           </button>
         </form>
+        </div>
+
+        <aside className="setup-preview" aria-label="Preview undangan versi mobile">
+          <p className="setup-preview-title">Preview Mobile</p>
+          <div className="phone-preview">
+            <div
+              className="phone-preview-screen"
+              style={{
+                ['--preview-cover' as string]: coverPreview ? `url(${coverPreview})` : undefined
+              }}
+            >
+              <p className="phone-preview-label">Undangan Pernikahan</p>
+              <div className="phone-preview-names">
+                {brideName || brideFullname || 'Mempelai'}<br />
+                <span style={{ color: '#e8c97e' }}>&amp;</span><br />
+                {groomName || groomFullname || 'Pasangan'}
+              </div>
+              <div className="phone-preview-date">{akadDateText || 'Tanggal Acara'}</div>
+              <p className="phone-preview-location">
+                {akadLocation || 'Lokasi acara'}<br />
+                {akadAddress || 'Alamat lengkap'}
+              </p>
+            </div>
+          </div>
+        </aside>
       </div>
     </div>
   );

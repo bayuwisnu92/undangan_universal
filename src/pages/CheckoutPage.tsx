@@ -44,7 +44,7 @@ export const CheckoutPage: React.FC = () => {
   };
 
   return (
-    <div style={{
+    <div className="app-page" style={{
       backgroundColor: '#0f172a',
       color: '#f8fafc',
       minHeight: '100vh',
@@ -54,7 +54,7 @@ export const CheckoutPage: React.FC = () => {
       justifyContent: 'center',
       padding: '40px 20px'
     }}>
-      <div style={{
+      <div className="checkout-card" style={{
         backgroundColor: '#1e293b',
         borderRadius: '24px',
         border: '1px solid rgba(255,255,255,0.05)',

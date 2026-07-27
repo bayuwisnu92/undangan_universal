@@ -64,7 +64,7 @@ export const TemplateElegant: React.FC<TemplateProps> = ({ data }) => {
 
         <div id="hero-content" className="text-center fade-in">
           <div className="bismillah-hero">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</div>
-          <p className="invitation-label">— Undangan Pernikahan —</p>
+          <p className="invitation-label">Undangan Pernikahan</p>
           <p className="invitation-sub">Kepada Bapak / Ibu / Saudara/i</p>
 
           <h1 className="hero-names">
@@ -104,7 +104,7 @@ export const TemplateElegant: React.FC<TemplateProps> = ({ data }) => {
               <p className="ayat-trans">
                 "Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang. Sungguh, pada yang demikian itu benar-benar terdapat tanda-tanda (kebesaran Allah) bagi kaum yang berpikir."
               </p>
-              <p className="ayat-source">— QS. Ar-Rum : 21 —</p>
+              <p className="ayat-source">QS. Ar-Rum : 21</p>
             </div>
 
             <div className="ayat-box mt-ayat">
@@ -114,7 +114,7 @@ export const TemplateElegant: React.FC<TemplateProps> = ({ data }) => {
               <p className="ayat-trans">
                 "Dan nikahkanlah orang-orang yang masih membujang di antara kamu, dan juga orang-orang yang layak (menikah) dari hamba-hamba sahayamu yang laki-laki dan perempuan. Jika mereka miskin, Allah akan memberi kemampuan kepada mereka dengan karunia-Nya. Dan Allah Mahaluas (pemberian-Nya), Maha Mengetahui."
               </p>
-              <p className="ayat-source">— QS. An-Nur : 32 —</p>
+              <p className="ayat-source">QS. An-Nur : 32</p>
             </div>
 
             <div className="hadits-box">
@@ -122,7 +122,7 @@ export const TemplateElegant: React.FC<TemplateProps> = ({ data }) => {
               <p className="hadits-text">
                 "Wahai para pemuda, barangsiapa di antara kalian yang sudah mampu menanggung beban pernikahan, maka hendaklah ia menikah. Sesungguhnya menikah itu lebih bisa menahan pandangan mata dan lebih bisa menjaga kemaluan."
               </p>
-              <p className="hadits-source">— HR. Bukhari & Muslim —</p>
+              <p className="hadits-source">HR. Bukhari & Muslim</p>
             </div>
           </div>
         </section>
@@ -249,7 +249,7 @@ export const TemplateElegant: React.FC<TemplateProps> = ({ data }) => {
                 Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak / Ibu / Saudara/i berkenan hadir dan memberikan doa restu kepada kedua mempelai.
               </p>
               <p className="penutup-text mt-1">
-                Atas kehadiran dan doa restu yang diberikan, kami ucapkan <em>Jazākumullāhu Khayran</em> — semoga Allah membalas kebaikan Anda dengan yang lebih baik.
+                Atas kehadiran dan doa restu yang diberikan, kami ucapkan <em>Jazakumullahu Khayran</em> - semoga Allah membalas kebaikan Anda dengan yang lebih baik.
               </p>
 
               <div className="wasalam">

@@ -1,0 +1,161 @@
+.template-rustic-warm {
+  --rustic-bg: #fbf7ef;
+  --rustic-ink: #31261e;
+  --rustic-muted: #7c6a5c;
+  --rustic-clay: #b46d45;
+  --rustic-leaf: #6f7658;
+  --font-serif: 'Playfair Display', serif;
+  --font-script: 'Great Vibes', cursive;
+  --font-sans: 'Montserrat', sans-serif;
+
+  background: var(--rustic-bg);
+  color: var(--rustic-ink);
+  min-height: 100vh;
+  font-family: var(--font-sans);
+}
+
+.template-rustic-warm #hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 40px 20px;
+  background:
+    linear-gradient(rgba(251, 247, 239, 0.72), rgba(251, 247, 239, 0.88)),
+    url('/background.png') center top / cover;
+}
+
+.template-rustic-warm .rustic-label {
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  font-size: 0.72rem;
+  color: var(--rustic-clay);
+  font-weight: 700;
+}
+
+.template-rustic-warm .hero-names {
+  display: grid;
+  gap: 2px;
+  font-family: var(--font-script);
+  font-size: clamp(3.5rem, 13vw, 7.2rem);
+  line-height: 0.9;
+  color: var(--rustic-clay);
+  margin: 18px 0;
+}
+
+.template-rustic-warm .hero-names span {
+  font-family: var(--font-serif);
+  font-size: clamp(1.6rem, 5vw, 2.3rem);
+  color: var(--rustic-leaf);
+}
+
+.template-rustic-warm .rustic-date {
+  letter-spacing: 2px;
+  color: var(--rustic-muted);
+}
+
+.template-rustic-warm .countdown {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 26px 0 30px;
+}
+
+.template-rustic-warm .time-box {
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(180, 109, 69, 0.18);
+  min-width: 74px;
+  padding: 12px 10px;
+  box-shadow: 0 10px 30px rgba(49, 38, 30, 0.06);
+}
+
+.template-rustic-warm .time { display: block; font-family: var(--font-serif); font-size: 1.65rem; }
+.template-rustic-warm .time-sep { display: none; }
+
+.template-rustic-warm .btn-open-invitation,
+.template-rustic-warm .btn-kirim,
+.template-rustic-warm .btn-maps {
+  border: 0;
+  background: var(--rustic-clay);
+  color: white;
+  padding: 12px 26px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-decoration: none;
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+
+.template-rustic-warm section {
+  padding: 86px 20px;
+  text-align: center;
+}
+
+.template-rustic-warm .rustic-intro > div,
+.template-rustic-warm .guestbook-container {
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.template-rustic-warm .section-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2.1rem, 6vw, 3.8rem);
+  font-weight: 600;
+  color: var(--rustic-leaf);
+  margin: 8px 0 20px;
+}
+
+.template-rustic-warm .cover-photo img {
+  width: min(560px, 100%);
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  object-position: top center;
+  border: 12px solid #fff;
+  box-shadow: 0 20px 54px rgba(49, 38, 30, 0.14);
+}
+
+.template-rustic-warm .mempelai-cards,
+.template-rustic-warm .acara-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 360px));
+  justify-content: center;
+  gap: 22px;
+}
+
+.template-rustic-warm .mempelai-card,
+.template-rustic-warm .acara-card {
+  background: #fff;
+  border: 1px solid rgba(180, 109, 69, 0.18);
+  padding: 30px 24px;
+  box-shadow: 0 14px 38px rgba(49, 38, 30, 0.07);
+}
+
+.template-rustic-warm .mempelai-card h3,
+.template-rustic-warm .acara-card h3 {
+  font-family: var(--font-serif);
+  font-size: 1.75rem;
+  color: var(--rustic-clay);
+}
+
+.template-rustic-warm .doa-form-wrap { display: grid; gap: 12px; margin-bottom: 26px; }
+.template-rustic-warm .doa-input,
+.template-rustic-warm .doa-textarea {
+  width: 100%;
+  border: 1px solid rgba(180, 109, 69, 0.22);
+  background: #fff;
+  padding: 13px 15px;
+  font-family: var(--font-sans);
+}
+.template-rustic-warm .ucapan-item { text-align: left; border-top: 1px solid rgba(180, 109, 69, 0.18); padding: 14px 0; }
+.template-rustic-warm #music-player { position: fixed; right: 24px; bottom: 24px; z-index: 50; }
+.template-rustic-warm #music-btn { width: 50px; height: 50px; border-radius: 50%; border: 0; background: var(--rustic-clay); color: #fff; cursor: pointer; }
+.template-rustic-warm .site-footer { padding: 36px 20px; text-align: center; color: var(--rustic-muted); }
+
+@media (max-width: 720px) {
+  .template-rustic-warm .mempelai-cards,
+  .template-rustic-warm .acara-cards { grid-template-columns: 1fr; }
+  .template-rustic-warm section { padding: 62px 16px; }
+}

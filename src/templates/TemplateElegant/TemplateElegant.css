@@ -33,6 +33,10 @@
   min-height: 100vh;
 }
 
+.template-elegant * {
+  min-width: 0;
+}
+
 /* ---- MUSIC PLAYER ---- */
 .template-elegant #music-player {
   position: fixed;
@@ -82,7 +86,7 @@
 /* ---- HERO ---- */
 .template-elegant #hero {
   position: relative;
-  min-height: 100vh;
+  min-height: 100svh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -193,6 +197,8 @@
   line-height: 1.1;
   color: var(--white);
   text-shadow: 0 2px 25px rgba(201,164,76,0.5);
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }
 
 .template-elegant .name-bride { color: var(--gold-light); }
@@ -512,6 +518,7 @@
   color: var(--navy);
   margin-bottom: 12px;
   line-height: 1.1;
+  overflow-wrap: anywhere;
 }
 
 .template-elegant .mempelai-parents {
@@ -616,6 +623,7 @@
   font-size: 0.88rem;
   color: var(--text);
   line-height: 1.5;
+  overflow-wrap: anywhere;
 }
 
 .template-elegant .acara-detail small {
@@ -945,11 +953,16 @@
   }
 
   .template-elegant .countdown {
-    gap: 4px;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 6px;
+    width: min(100%, 320px);
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .template-elegant .time-box {
-    min-width: 52px;
+    min-width: 0;
     padding: 8px 8px;
   }
 
@@ -958,7 +971,7 @@
   }
 
   .template-elegant .time-sep {
-    font-size: 1.4rem;
+    display: none;
   }
 
   .template-elegant .btn-open-invitation {
@@ -1035,7 +1048,7 @@
   }
 
   .template-elegant .maps-preview iframe {
-    height: 200px;
+    height: 220px;
   }
 
   .template-elegant #music-player {
@@ -1069,4 +1082,3 @@
     font-size: clamp(2.5rem, 7vw, 4rem);
   }
 }
-

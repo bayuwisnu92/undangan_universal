@@ -24,7 +24,7 @@ export const Countdown: React.FC<CountdownProps> = ({
     return (
       <div className={className}>
         <h5 style={{ color: 'var(--gold-light)', fontFamily: 'var(--font-serif)', fontSize: '1.5rem', textAlign: 'center' }}>
-          🎉 Acara Telah Dimulai! 🎉
+          Acara Telah Dimulai!
         </h5>
       </div>
     );

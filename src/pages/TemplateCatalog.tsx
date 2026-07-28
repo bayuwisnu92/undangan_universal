@@ -6,6 +6,43 @@ export const TemplateCatalog: React.FC = () => {
   const navigate = useNavigate();
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
   const isDark = theme === 'dark';
+
+  const getShareUrl = (demoSlug: string) => {
+    if (typeof window === 'undefined') {
+      return `/${demoSlug}`;
+    }
+
+    return `${window.location.origin}/${demoSlug}`;
+  };
+
+  const handleShare = async (platform: 'whatsapp' | 'facebook' | 'instagram' | 'tiktok' | 'copy', demoSlug: string, templateName: string) => {
+    const shareUrl = getShareUrl(demoSlug);
+    const text = `Cek template undangan digital "${templateName}" di Undangan Universal: ${shareUrl}`;
+
+    if (platform === 'whatsapp') {
+      window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank', 'noopener,noreferrer');
+      return;
+    }
+
+    if (platform === 'facebook') {
+      window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`, '_blank', 'noopener,noreferrer');
+      return;
+    }
+
+    if (navigator.share && platform === 'copy') {
+      try {
+        await navigator.share({ title: templateName, text, url: shareUrl });
+        return;
+      } catch {
+        // Continue to copy fallback when the native share sheet is dismissed or unavailable.
+      }
+    }
+
+    await navigator.clipboard?.writeText(text);
+    alert(platform === 'instagram' || platform === 'tiktok'
+      ? 'Link template sudah disalin. Tempelkan di Instagram/TikTok untuk membagikan.'
+      : 'Link template sudah disalin.');
+  };
   
   const demoSlugs: Record<number, string> = {
     1: 'lulu-bayu',
@@ -493,12 +530,36 @@ export const TemplateCatalog: React.FC = () => {
                       Pilih Desain
                     </button>
                   </div>
+
+                  <div className="catalog-share">
+                    <span>Bagikan</span>
+                    <div className="catalog-share-buttons">
+                      <button type="button" className="share-btn share-wa" onClick={() => handleShare('whatsapp', demoSlug, template.name)} aria-label={`Bagikan ${template.name} ke WhatsApp`}>
+                        WA
+                      </button>
+                      <button type="button" className="share-btn share-fb" onClick={() => handleShare('facebook', demoSlug, template.name)} aria-label={`Bagikan ${template.name} ke Facebook`}>
+                        FB
+                      </button>
+                      <button type="button" className="share-btn share-ig" onClick={() => handleShare('instagram', demoSlug, template.name)} aria-label={`Salin link ${template.name} untuk Instagram`}>
+                        IG
+                      </button>
+                      <button type="button" className="share-btn share-tt" onClick={() => handleShare('tiktok', demoSlug, template.name)} aria-label={`Salin link ${template.name} untuk TikTok`}>
+                        TT
+                      </button>
+                      <button type="button" className="share-btn share-copy" onClick={() => handleShare('copy', demoSlug, template.name)} aria-label={`Salin atau bagikan link ${template.name}`}>
+                        Link
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             );
           })}
         </div>
       </div>
+      <a href="/admin" className="admin-floating-button" aria-label="Buka halaman admin">
+        Admin
+      </a>
     </div>
   );
 };

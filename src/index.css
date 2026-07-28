@@ -510,6 +510,78 @@ label {
   background: rgba(239, 111, 97, 0.08);
 }
 
+.catalog-share {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--catalog-border);
+}
+
+.catalog-share > span {
+  display: block;
+  color: var(--catalog-muted);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.catalog-share-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.share-btn {
+  min-width: 42px;
+  min-height: 38px;
+  border: 1px solid var(--catalog-border);
+  border-radius: 11px;
+  color: #fff;
+  font-size: 0.76rem;
+  font-weight: 900;
+  cursor: pointer;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.share-btn:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.06);
+}
+
+.share-wa { background: #22c55e; }
+.share-fb { background: #1877f2; }
+.share-ig { background: linear-gradient(135deg, #f58529, #dd2a7b, #8134af); }
+.share-tt { background: #111827; }
+.share-copy {
+  min-width: 58px;
+  background: var(--catalog-text);
+  color: var(--catalog-bg);
+}
+
+.admin-floating-button {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 80;
+  min-height: 52px;
+  padding: 0 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #111827, #a855f7);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 900;
+  box-shadow: 0 16px 36px rgba(17, 24, 39, 0.28);
+  border: 1px solid rgba(255,255,255,0.18);
+}
+
+.admin-floating-button:hover {
+  transform: translateY(-2px);
+}
+
 @media (max-width: 860px) {
   .catalog-shell {
     padding: 20px 14px 52px;
@@ -618,6 +690,13 @@ label {
 
   .catalog-card-content {
     padding: 20px;
+  }
+
+  .admin-floating-button {
+    right: 14px;
+    bottom: 14px;
+    min-height: 48px;
+    padding: 0 16px;
   }
 
   .setup-page {

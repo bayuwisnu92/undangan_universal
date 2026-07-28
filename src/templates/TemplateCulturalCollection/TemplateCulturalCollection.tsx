@@ -21,6 +21,7 @@ type Variant = {
   };
   adat?: {
     title: string;
+    proverb: string;
     details: string[];
   };
 };
@@ -83,6 +84,7 @@ const variants: Record<number, Variant> = {
     quote: 'Dengan penuh hormat, kami mengundang panjenengan untuk hadir di hari bahagia kami.',
     adat: {
       title: 'Nuansa Paes Ageng dan Joglo',
+      proverb: 'Ajining diri saka lathi, ajining raga saka busana. Dalam rumah tangga, tutur yang lembut dan sikap yang elok menjadi pangkal kehormatan.',
       details: ['Motif kawung dan warna sogan klasik.', 'Bahasa undangan halus dengan rasa hormat keluarga.', 'Frame joglo memberi kesan teduh dan ningrat.']
     }
   },
@@ -93,6 +95,7 @@ const variants: Record<number, Variant> = {
     quote: 'Wilujeng sumping, mugia kersa ngiring ngahaturkeun doa pangestu.',
     adat: {
       title: 'Nuansa Sunda Asri',
+      proverb: 'Silih asah, silih asih, silih asuh. Pernikahan menjadi tempat saling menguatkan, menyayangi, dan menuntun dalam kebaikan.',
       details: ['Hijau daun dan aksen bambu untuk rasa sejuk.', 'Salam “Wilujeng Sumping” sebagai pembuka.', 'Terinspirasi siger Sunda dan suasana saung.']
     }
   },
@@ -103,6 +106,7 @@ const variants: Record<number, Variant> = {
     quote: 'Dengan limpahan doa keluarga, kami mengundang dunsanak di hari nan bahagia.',
     adat: {
       title: 'Gonjong Minang Megah',
+      proverb: 'Saciok bak ayam, sadanciang bak basi. Suami istri seia sekata, kokoh dalam musyawarah dan keluarga.',
       details: ['Siluet rumah gadang sebagai identitas utama.', 'Merah marun dan emas untuk kesan perayaan.', 'Sapaan dunsanak memberi rasa kekeluargaan Minang.']
     }
   },
@@ -113,6 +117,7 @@ const variants: Record<number, Variant> = {
     quote: 'Horas. Dengan sukacita keluarga besar mengundang hadirin memberi doa restu.',
     adat: {
       title: 'Ulos dan Gorga Batak',
+      proverb: 'Dalihan na tolu menjadi pengingat: rumah tangga berdiri kuat saat hormat, kasih, dan kebersamaan keluarga dijaga.',
       details: ['Garis ulos merah, hitam, dan putih.', 'Sapaan “Horas” ditampilkan kuat di hero.', 'Motif gorga memberi karakter tegas dan hangat.']
     }
   },
@@ -123,6 +128,7 @@ const variants: Record<number, Variant> = {
     quote: 'Dengan adat dan doa, kami mengikat janji dalam kebahagiaan keluarga.',
     adat: {
       title: 'Lipa Sabbe dan Phinisi',
+      proverb: 'Siri na pacce mengajarkan kehormatan dan kepedulian; dua hati berjalan bersama dengan martabat dan kasih keluarga.',
       details: ['Motif kotak sarung sutra Bugis sebagai pattern.', 'Aksen biru laut dan emas terinspirasi phinisi.', 'Bahasa visual dibuat bersih, gagah, dan elegan.']
     }
   }
@@ -173,11 +179,13 @@ export const TemplateCulturalCollection: React.FC<TemplateProps> = ({ data }) =>
           <section className="dalil-section">
             <div className="dalil-grid">
               <article className="dalil-card">
+                <div className="section-symbol">☾</div>
                 <span>Dalil Al-Qur'an</span>
                 <h2>Landasan Pernikahan</h2>
                 <p>{variant.dalil.ayat}</p>
               </article>
               <article className="dalil-card">
+                <div className="section-symbol">✦</div>
                 <span>Hadits Pernikahan</span>
                 <h2>Nasihat Rasulullah</h2>
                 <p>{variant.dalil.hadith}</p>
@@ -193,6 +201,7 @@ export const TemplateCulturalCollection: React.FC<TemplateProps> = ({ data }) =>
               <div>
                 <p className="cultural-kicker">Keunikan Tema</p>
                 <h2 className="section-title">{variant.adat.title}</h2>
+                <blockquote className="adat-proverb">{variant.adat.proverb}</blockquote>
                 <ul>
                   {variant.adat.details.map((detail) => (
                     <li key={detail}>{detail}</li>
@@ -204,40 +213,59 @@ export const TemplateCulturalCollection: React.FC<TemplateProps> = ({ data }) =>
         )}
 
         <section>
-          <h2 className="section-title">Mempelai</h2>
+          <div className="section-heading-symbol">
+            <span>♀</span>
+            <h2 className="section-title">Mempelai</h2>
+            <span>♂</span>
+          </div>
           <div className="mempelai-cards">
-            <div className="mempelai-card">
+            <div className="mempelai-card mempelai-wanita">
+              <div className="mempelai-icon">♀</div>
               <h3>{data.bride_fullname}</h3>
               <p>Putri dari {data.bride_parents}</p>
+              <div className="mempelai-tag">Mempelai Wanita</div>
             </div>
-            <div className="mempelai-card">
+            <div className="mempelai-card mempelai-pria">
+              <div className="mempelai-icon">♂</div>
               <h3>{data.groom_fullname}</h3>
               <p>Putra dari {data.groom_parents}</p>
+              <div className="mempelai-tag">Mempelai Pria</div>
             </div>
           </div>
         </section>
 
         <section>
-          <h2 className="section-title">Waktu &amp; Lokasi</h2>
+          <div className="section-heading-symbol">
+            <span>◷</span>
+            <h2 className="section-title">Waktu &amp; Lokasi</h2>
+            <span>⌖</span>
+          </div>
           <div className="acara-cards">
             <div className="acara-card">
+              <div className="acara-icon">☪</div>
               <span>Akad Nikah</span>
               <h3>{data.akad_date_text}</h3>
-              <p>{data.akad_time_text}</p>
-              <p>{data.akad_location}<br />{data.akad_address}</p>
+              <p className="acara-detail"><i className="fa-regular fa-clock"></i>{data.akad_time_text}</p>
+              <p className="acara-detail"><i className="fa-solid fa-location-dot"></i>{data.akad_location}<br />{data.akad_address}</p>
             </div>
             <div className="acara-card">
+              <div className="acara-icon">✺</div>
               <span>Resepsi</span>
               <h3>{data.resepsi_date_text}</h3>
-              <p>{data.resepsi_time_text}</p>
-              <p>{data.resepsi_location}<br />{data.resepsi_address}</p>
+              <p className="acara-detail"><i className="fa-regular fa-clock"></i>{data.resepsi_time_text}</p>
+              <p className="acara-detail"><i className="fa-solid fa-location-dot"></i>{data.resepsi_location}<br />{data.resepsi_address}</p>
             </div>
           </div>
           <GoogleMaps mapsUrl={data.maps_url || ''} iframeUrl={data.maps_iframe_url || ''} />
         </section>
 
         <section>
-          <h2 className="section-title">Ucapan &amp; Doa</h2>
+          <div className="section-heading-symbol">
+            <span>✉</span>
+            <h2 className="section-title">Ucapan &amp; Doa</h2>
+            <span>☾</span>
+          </div>
+          <p className="doa-desc">Setiap ucapan dan doa baik menjadi hadiah paling bermakna untuk kedua mempelai.</p>
           <GuestBook weddingId={data.id} />
         </section>
 

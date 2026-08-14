@@ -123,9 +123,9 @@ export const TemplateCatalog: React.FC = () => {
             <div style={{ fontSize: '1.3rem', color: '#E8C97E', fontFamily: "'Amiri', serif", zIndex: 1, marginBottom: '6px', opacity: 0.9 }}>بِسْمِ اللَّهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
             <div style={{ fontSize: '0.7rem', color: '#C9A44C', fontFamily: "'Cormorant Garamond', serif", fontStyle: 'italic', letterSpacing: '3px', zIndex: 1, marginBottom: '4px' }}>THE WEDDING OF</div>
             <div style={{ fontSize: '0.65rem', color: 'rgba(255,255,255,0.5)', letterSpacing: '2px', textTransform: 'uppercase', zIndex: 1, marginBottom: '10px' }}>UNDANGAN PERNIKAHAN</div>
-            <div style={{ fontSize: '2.8rem', fontFamily: "'Sofia', cursive", color: '#E8C97E', zIndex: 1, lineHeight: 1.1, textShadow: '0 2px 20px rgba(201,164,76,0.4)' }}>Lulu</div>
-            <div style={{ fontSize: '2rem', fontFamily: "'Sofia', cursive", color: '#C9A44C', zIndex: 1, margin: '-2px 0' }}>&amp;</div>
-            <div style={{ fontSize: '2.8rem', fontFamily: "'Sofia', cursive", color: '#FFFFFF', zIndex: 1, lineHeight: 1.1, textShadow: '0 2px 20px rgba(201,164,76,0.3)' }}>Bayu</div>
+            <div style={{ fontSize: '2.5rem', fontFamily: "'Sofia', cursive", color: '#E8C97E', zIndex: 1, lineHeight: 1.1, textShadow: '0 2px 20px rgba(201,164,76,0.4)' }}>Kartina</div>
+            <div style={{ fontSize: '1.8rem', fontFamily: "'Sofia', cursive", color: '#C9A44C', zIndex: 1, margin: '-2px 0' }}>&amp;</div>
+            <div style={{ fontSize: '2.5rem', fontFamily: "'Sofia', cursive", color: '#FFFFFF', zIndex: 1, lineHeight: 1.1, textShadow: '0 2px 20px rgba(201,164,76,0.3)' }}>Frima</div>
             <div style={{ marginTop: '14px', zIndex: 1, border: '1px solid #C9A44C', borderRadius: '50px', padding: '6px 20px', background: 'rgba(201,164,76,0.08)' }}>
               <span style={{ fontFamily: "'Cormorant Garamond', serif", color: '#E8C97E', fontSize: '0.8rem', letterSpacing: '2px' }}>16 AGUSTUS 2026</span>
             </div>

@@ -39,20 +39,20 @@ export function calculateActiveUntil(durationDays: number, startDate = new Date(
 
 // Mock data fallback khusus untuk menjamin Live Demo selalu berfungsi
 export const mockWeddings: Record<string, WeddingData> = {
-  'lulu-bayu': {
+  'kartina-frima': {
     id: '1',
-    slug: 'lulu-bayu',
+    slug: 'kartina-frima',
     template_id: 1, // Elegant Luxury (Template Master)
     payment_status: 'paid',
     is_configured: true,
-    buyer_name: 'Bayu Wisnu',
-    buyer_email: 'bayu@example.com',
-    bride_name: 'Lulu',
-    bride_fullname: 'Lulu Diyanti Putri',
-    bride_parents: 'Bapak Yosep & Ibu Zulfira Yanti',
-    groom_name: 'Bayu',
-    groom_fullname: 'Bayu Wisnu Aji',
-    groom_parents: 'Bapak Sukamto & Ibu Suwarti',
+    buyer_name: 'Frima',
+    buyer_email: 'frima@example.com',
+    bride_name: 'Kartina',
+    bride_fullname: 'Kartina Indah',
+    bride_parents: 'Bapak Ahmad & Ibu Siti',
+    groom_name: 'Frima',
+    groom_fullname: 'Frima Pratama',
+    groom_parents: 'Bapak Hendra & Ibu Dewi',
     event_date: '2026-08-16T08:00:00+07:00',
     akad_date_text: 'Ahad, 16 Agustus 2026',
     akad_time_text: '08.00 WIB - Selesai',

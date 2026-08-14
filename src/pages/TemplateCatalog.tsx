@@ -45,7 +45,7 @@ export const TemplateCatalog: React.FC = () => {
   };
   
   const demoSlugs: Record<number, string> = {
-    1: 'lulu-bayu',
+    1: 'kartina-frima',
     2: 'joko-riri',
     3: 'andi-rina',
     4: 'budi-siti',

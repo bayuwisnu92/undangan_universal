@@ -5,6 +5,7 @@ import { Countdown } from '../../components/Countdown';
 import { MusicPlayer } from '../../components/MusicPlayer';
 import { GuestBook } from '../../components/GuestBook';
 import { GoogleMaps } from '../../components/GoogleMaps';
+import { GuestGreeting } from '../../components/GuestGreeting';
 
 interface TemplateProps {
   data: WeddingData;
@@ -23,6 +24,7 @@ export const TemplateGlass: React.FC<TemplateProps> = ({ data }) => {
       <section id="hero">
         <div className="glass-card text-center">
           <p style={{ letterSpacing: '3px', fontSize: '0.9rem', color: 'var(--text-muted)' }}>The Wedding Invitation</p>
+          <GuestGreeting />
           <h1 className="hero-names">{data.bride_name} &amp; {data.groom_name}</h1>
           <p style={{ margin: '15px 0', fontSize: '1.1rem' }}>{data.akad_date_text}</p>
           

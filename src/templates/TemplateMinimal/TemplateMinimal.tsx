@@ -5,6 +5,7 @@ import { Countdown } from '../../components/Countdown';
 import { MusicPlayer } from '../../components/MusicPlayer';
 import { GuestBook } from '../../components/GuestBook';
 import { GoogleMaps } from '../../components/GoogleMaps';
+import { GuestGreeting } from '../../components/GuestGreeting';
 
 interface TemplateProps {
   data: WeddingData;
@@ -23,6 +24,7 @@ export const TemplateMinimal: React.FC<TemplateProps> = ({ data }) => {
       <section id="hero">
         <div style={{ textAlign: 'center', maxWidth: '600px' }}>
           <p style={{ letterSpacing: '4px', textTransform: 'uppercase', fontSize: '0.8rem' }}>The Wedding of</p>
+          <GuestGreeting />
           <h1 className="hero-names">
             <div>{data.bride_name}</div>
             <div style={{ fontSize: '2rem', fontWeight: 300 }}>&amp;</div>

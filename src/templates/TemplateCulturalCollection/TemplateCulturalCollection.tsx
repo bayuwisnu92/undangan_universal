@@ -5,6 +5,7 @@ import { Countdown } from '../../components/Countdown';
 import { MusicPlayer } from '../../components/MusicPlayer';
 import { GuestBook } from '../../components/GuestBook';
 import { GoogleMaps } from '../../components/GoogleMaps';
+import { GuestGreeting } from '../../components/GuestGreeting';
 
 interface TemplateProps {
   data: WeddingData;
@@ -150,6 +151,7 @@ export const TemplateCulturalCollection: React.FC<TemplateProps> = ({ data }) =>
         <div className="cultural-ornament cultural-ornament-top" />
         <div className="cultural-hero-card">
           <p className="cultural-kicker">{variant.label}</p>
+          <GuestGreeting />
           <h1 className="hero-names">{data.bride_name} <span>&amp;</span> {data.groom_name}</h1>
           <p className="cultural-date">{data.akad_date_text}</p>
           <Countdown targetDate={data.event_date || ''} />

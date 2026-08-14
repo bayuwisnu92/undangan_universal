@@ -5,6 +5,7 @@ import { Countdown } from '../../components/Countdown';
 import { MusicPlayer } from '../../components/MusicPlayer';
 import { GuestBook } from '../../components/GuestBook';
 import { GoogleMaps } from '../../components/GoogleMaps';
+import { GuestGreeting } from '../../components/GuestGreeting';
 
 interface TemplateProps {
   data: WeddingData;
@@ -22,6 +23,7 @@ export const TemplateCoastalBlue: React.FC<TemplateProps> = ({ data }) => {
       <section id="hero">
         <div className="coastal-panel">
           <p>Wedding Celebration</p>
+          <GuestGreeting />
           <h1 className="hero-names">{data.bride_name} &amp; {data.groom_name}</h1>
           <span>{data.akad_date_text}</span>
           <Countdown targetDate={data.event_date || ''} />

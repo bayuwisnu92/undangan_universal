@@ -5,6 +5,7 @@ import { Countdown } from '../../components/Countdown';
 import { MusicPlayer } from '../../components/MusicPlayer';
 import { GuestBook } from '../../components/GuestBook';
 import { GoogleMaps } from '../../components/GoogleMaps';
+import { GuestGreeting } from '../../components/GuestGreeting';
 
 interface TemplateProps {
   data: WeddingData;
@@ -23,6 +24,7 @@ export const TemplateFloral: React.FC<TemplateProps> = ({ data }) => {
       <section id="hero">
         <div style={{ textAlign: 'center' }}>
           <p style={{ letterSpacing: '3px', textTransform: 'uppercase' }}>Walimatul Ursy</p>
+          <GuestGreeting />
           <h1 className="hero-names">{data.bride_name} &amp; {data.groom_name}</h1>
           <p style={{ fontSize: '1.2rem', margin: '15px 0' }}>{data.akad_date_text}</p>
           

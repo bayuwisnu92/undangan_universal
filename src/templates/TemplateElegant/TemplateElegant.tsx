@@ -5,6 +5,7 @@ import { Countdown } from '../../components/Countdown';
 import { MusicPlayer } from '../../components/MusicPlayer';
 import { GuestBook } from '../../components/GuestBook';
 import { GoogleMaps } from '../../components/GoogleMaps';
+import { GuestGreeting } from '../../components/GuestGreeting';
 
 interface TemplateProps {
   data: WeddingData;
@@ -65,7 +66,8 @@ export const TemplateElegant: React.FC<TemplateProps> = ({ data }) => {
         <div id="hero-content" className="text-center fade-in">
           <div className="bismillah-hero">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</div>
           <p className="invitation-label">Undangan Pernikahan</p>
-          <p className="invitation-sub">Kepada Bapak / Ibu / Saudara/i</p>
+          
+          <GuestGreeting />
 
           <h1 className="hero-names">
             <span className="name-bride">{data.bride_fullname}</span>

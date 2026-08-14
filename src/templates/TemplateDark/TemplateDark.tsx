@@ -5,6 +5,7 @@ import { Countdown } from '../../components/Countdown';
 import { MusicPlayer } from '../../components/MusicPlayer';
 import { GuestBook } from '../../components/GuestBook';
 import { GoogleMaps } from '../../components/GoogleMaps';
+import { GuestGreeting } from '../../components/GuestGreeting';
 
 interface TemplateProps {
   data: WeddingData;
@@ -21,19 +22,20 @@ export const TemplateDark: React.FC<TemplateProps> = ({ data }) => {
       <MusicPlayer musicUrl={data.music_url || ''} />
 
       <section
-  id="hero"
-  style={{
-    backgroundImage: `
-      linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)),
-      url(${data.cover_bg_image})
-    `,
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    backgroundRepeat: 'no-repeat'
-  }}
->
+        id="hero"
+        style={{
+          backgroundImage: `
+            linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)),
+            url(${data.cover_bg_image})
+          `,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      >
         <div style={{ textAlign: 'center' }}>
           <p style={{ letterSpacing: '4px', textTransform: 'uppercase', fontSize: '0.9rem' }}>The Wedding Celebration</p>
+          <GuestGreeting />
           <h1 className="hero-names">{data.bride_name} &amp; {data.groom_name}</h1>
           <p style={{ fontSize: '1.1rem', margin: '20px 0', letterSpacing: '2px' }}>{data.akad_date_text}</p>
           

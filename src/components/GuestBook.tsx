@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useGuestBook } from '../hooks/useGuestBook';
+import { useGuestName } from '../hooks/useGuestName';
 
 interface GuestBookProps {
   weddingId: string;
@@ -19,7 +20,8 @@ export const GuestBook: React.FC<GuestBookProps> = ({
   itemClassName = "ucapan-item"
 }) => {
   const { wishes, loading, submitting, submitWish } = useGuestBook(weddingId);
-  const [name, setName] = useState('');
+  const guestNameFromUrl = useGuestName();
+  const [name, setName] = useState(guestNameFromUrl || '');
   const [message, setMessage] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {

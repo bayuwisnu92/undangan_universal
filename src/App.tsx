@@ -27,6 +27,7 @@ function App() {
 
         {/* Dynamic invitation render */}
         <Route path="/:slug" element={<InvitationLoader />} />
+        <Route path="/:slug/:guestName" element={<InvitationLoader />} />
 
         {/* Root fallback redirects to catalog */}
         <Route path="/" element={<Navigate to="/templates" replace />} />

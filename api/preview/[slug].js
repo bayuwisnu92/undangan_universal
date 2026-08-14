@@ -7,21 +7,7 @@ const supabase = createClient(
 
 export default async function handler(req, res) {
 
-    let { slug } = req.query;
-    let guestName = '';
-
-    if (Array.isArray(slug)) {
-        if (slug.length >= 2) {
-            guestName = slug.slice(1).join('/');
-        }
-        slug = slug[0];
-    } else if (typeof slug === 'string' && slug.includes('/')) {
-        const parts = slug.split('/');
-        slug = parts[0];
-        guestName = parts.slice(1).join('/');
-    }
-
-    const redirectPath = guestName ? `/${slug}/${guestName}` : `/${slug}`;
+    const { slug } = req.query;
 
     if (slug === "templates") {
         const title = "Katalog Undangan Digital Premium - Pilih Desain Impianmu ✨";
@@ -62,12 +48,6 @@ Redirecting to catalog...
         `);
     }
 
-    let bride_name = '';
-    let groom_name = '';
-    let akad_date_text = '';
-    let akad_location = '';
-    let cover_bg_image = '';
-
     const { data, error } = await supabase
         .from("weddings")
         .select(`
@@ -80,33 +60,22 @@ Redirecting to catalog...
         .eq("slug", slug)
         .maybeSingle();
 
-    if (data) {
-        bride_name = data.bride_name;
-        groom_name = data.groom_name;
-        akad_date_text = data.akad_date_text || '';
-        akad_location = data.akad_location || '';
-        cover_bg_image = data.cover_bg_image || '';
-    } else if (slug === 'kartina-frima' || slug === 'lulu-bayu') {
-        bride_name = 'Kartina';
-        groom_name = 'Frima';
-        akad_date_text = 'Ahad, 16 Agustus 2026';
-        akad_location = 'Gedung PT INTI';
-    } else {
+    if (error || !data) {
         return res.status(404).send("Undangan tidak ditemukan");
     }
 
     const title =
-        `Undangan Pernikahan ${bride_name} & ${groom_name}`;
+        `Undangan Pernikahan ${data.bride_name} & ${data.groom_name}`;
 
     const description =
-        `${akad_date_text} ${akad_location}`;
+        `${data.akad_date_text ?? ""} ${data.akad_location ?? ""}`;
 
     let image = "https://undangan-universal.vercel.app/bg-wedding.png";
-    if (cover_bg_image) {
-        if (cover_bg_image.startsWith("http://") || cover_bg_image.startsWith("https://")) {
-            image = cover_bg_image;
+    if (data.cover_bg_image) {
+        if (data.cover_bg_image.startsWith("http://") || data.cover_bg_image.startsWith("https://")) {
+            image = data.cover_bg_image;
         } else {
-            image = `https://undangan-universal.vercel.app/${cover_bg_image.replace(/^\//, '')}`;
+            image = `https://undangan-universal.vercel.app/${data.cover_bg_image.replace(/^\//, '')}`;
         }
     }
 
@@ -136,7 +105,7 @@ Redirecting to catalog...
 <meta name="twitter:image" content="${image}" />
 
 <script>
-window.location.replace("${redirectPath}");
+window.location.replace("/${slug}");
 </script>
 
 </head>
